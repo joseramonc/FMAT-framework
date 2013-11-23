@@ -43,11 +43,15 @@ public class DataBaseConfigInfo {
 		return dataBaseConfigInfo;
 	}
 	
-	public void setConfig(){
+	private void setConfig(){
 		DBConfigReader dBConfigReader = new DBConfigReader();
 		setUrl(dBConfigReader.getUrl());
 		setUser(dBConfigReader.getUser());
 		setPass(dBConfigReader.getPass());
+	}
+	
+	public void update(){
+		setConfig();
 	}
 
 }
