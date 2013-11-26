@@ -5,6 +5,8 @@
 package fmat.arquitectura.mvc.config;
 
 import fmat.arquitectura.mvc.control.ApplicationController;
+import fmat.arquitectura.mvc.view.ApplicationView;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -57,7 +59,7 @@ public class Config {
         return null;
     }
     
-    public boolean sendParamsToController(String viewName, String viewMethodName, Object[] params){
+    public boolean sendParamsToController(String viewName, String viewMethodName, Object[] params, ApplicationView av){
         for (int i =0; i < params.length; i++){
             System.out.println(params[i]);
         }
@@ -67,7 +69,12 @@ public class Config {
         try {
             try {
 //                if (getParametersOf(viewName, viewMethodName).length <= 0){
-                    return (boolean)controller.getClass().getMethod(getControllerMethod(viewName, viewMethodName)).invoke(controller);
+                    
+                    boolean response = (boolean)controller.getClass().getMethod(getControllerMethod(viewName, viewMethodName)).invoke(controller);
+                    if(response){
+                    	av.setReturnedVariable(controller.getreturnedVariable());
+                    } 
+                    return response;
 //                } else {
 //                    ejecutar metodo con parametros...
 //                }

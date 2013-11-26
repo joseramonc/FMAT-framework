@@ -12,9 +12,18 @@ import java.util.ArrayList;
  */
 public abstract class ApplicationController {
     private ArrayList<Object> params;
+    public Object returnedVariable;
     
     protected ArrayList getParams(){
         return params;
+    }
+    
+    public Object getreturnedVariable(){
+    	return returnedVariable;
+    }
+    
+    public void setReturnedVariable(Object returnedVar){
+    	returnedVariable = returnedVar;
     }
     
     public ApplicationController getController(){

@@ -7,7 +7,7 @@
 			ViewImplementer
 		</view>
 		<viewAction>
-			presionoBoton
+			presionaBoton
 		</viewAction>
 		<controllerAction>
 			saludaAlConfig

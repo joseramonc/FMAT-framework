@@ -17,17 +17,20 @@ import javax.swing.JOptionPane;
  * @author Asus
  */
 public class ViewImplementer extends ApplicationView{
-    private final View v;
+    private View v;
     private String campos1;
     private String campos2;
     
-    public ViewImplementer() {
-        v = new View(this);
-        v.setVisible(true);
+    public ViewImplementer(final View view) {
+        setView(view);
+    }
+    
+    public void setView(View view){
+    	v = view;
     }
     
     public static void main(String[] args) throws NoSuchFieldException {
-        ViewImplementer v = new ViewImplementer();
+//        ViewImplementer v = new ViewImplementer();
     }
     
     public String getcampos1(){
@@ -41,9 +44,10 @@ public class ViewImplementer extends ApplicationView{
     public void presionoBoton() throws NoSuchFieldException{
         campos1 = v.getJLabel1().getText();
         campos2 = v.getJLabel2().getText();
-        sendToController("presionoBoton");
+        sendToController("presionaBoton");
         if(islastResponse()){
             System.out.println(islastResponse());
+            System.out.println(((Alumno)getReturnedVariable()).getMatricula());
         } else {
             System.out.println(islastResponse());
         }

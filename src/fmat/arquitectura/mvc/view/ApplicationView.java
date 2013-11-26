@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 public abstract class ApplicationView {
 	private boolean lastResponse;
+	public Object returnedVariable;
         
 	public void sendToController(String action) throws NoSuchFieldException{
             String[] variableNames = Config.getInstance().getParametersOf(this.getClass().getSimpleName(), action);
@@ -47,7 +48,7 @@ public abstract class ApplicationView {
                 }
                 }
                 setlastResponse(    
-                    Config.getInstance().sendParamsToController(this.getClass().getSimpleName(), action, params)
+                    Config.getInstance().sendParamsToController(this.getClass().getSimpleName(), action, params, this)
                 );
 	}
 
@@ -58,4 +59,12 @@ public abstract class ApplicationView {
         public void setlastResponse(boolean lastResponse) {
             this.lastResponse = lastResponse;
         }
+
+		public Object getReturnedVariable() {
+			return returnedVariable;
+		}
+
+		public void setReturnedVariable(Object returnedVariable) {
+			this.returnedVariable = returnedVariable;
+		}
 }

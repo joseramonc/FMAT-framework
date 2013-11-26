@@ -19,6 +19,12 @@ public class testController extends ApplicationController {
     
     public boolean saludaAlConfig(){
         System.out.println("hola config");
+        Alumno a = new Alumno();
+        a.setMatricula("123456");
+        a.setNombre("juanito G.");
+        setReturnedVariable(a); 
         return true;
     }
+    
+    
 }

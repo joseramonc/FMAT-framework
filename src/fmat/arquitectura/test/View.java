@@ -19,12 +19,13 @@ private ViewImplementer vi;
      */
     public View() {
         initComponents();
+        vi = new ViewImplementer(this);
     }
     
-    public View(ViewImplementer vi) {
-        initComponents();
-        this.vi = vi;
-    }
+//    public View(ViewImplementer vi) {
+//        initComponents();
+////        this.vi = vi;
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
