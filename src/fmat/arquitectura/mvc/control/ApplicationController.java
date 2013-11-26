@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Asus
  */
-abstract class ApplicationController {
+public abstract class ApplicationController {
     private ArrayList<Object> params;
     
     protected ArrayList getParams(){
