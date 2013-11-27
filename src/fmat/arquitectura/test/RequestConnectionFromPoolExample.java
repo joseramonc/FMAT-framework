@@ -13,12 +13,14 @@ public class RequestConnectionFromPoolExample {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+		
 		Controlador_Pool controller=new Controlador_Pool();
+		controller.crearConexiones();
 		Conexion conexion=controller.obtenerConexion();
 		Connection conn=conexion.getConexion();
 		try{
 		Statement st = conn.createStatement();
-		String query = "select * from perfil";
+		String query = "select * from usuario";
 		
 			ResultSet rs = st.executeQuery(query);
 			rs.next();

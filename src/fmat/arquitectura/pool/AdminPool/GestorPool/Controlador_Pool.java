@@ -14,23 +14,38 @@ public class Controlador_Pool  {
 	
 	
 	public Conexion obtenerConexion() {
-		DBConnectionFactory DBC = new DBConnectionFactory();
-		
-		return new Conexion(DBC.createConnection(),true);
-		//return poolConexiones.obtenerConexionDisp();
+		return poolConexiones.obtenerConexionDisp();
 	}
 	
 	public void crearConexiones(){
-		if(poolConexiones.getSegmentosCreados()<=poolConexiones.getSegmentosCreados()){
+		if(poolConexiones.getSegmentosCreados()<poolConexiones.getSegmentos()){
 			ArrayList<Conexion>  conexiones= poolConexiones.crearSegmentoConexiones();
 			for(int indice=0; indice<poolConexiones.getTamañoSegmentos();indice++){
 				Conexion conexion =obtenerConexionDB();
 				conexiones.add(conexion);
 				}
 			poolConexiones.asignarSegmentoCreado(conexiones);
+			crearConexiones.run();
 		}
 
 	}
+	
+	Runnable conexionesAgotadas=new Runnable(){
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			int segundos=5;
+			try{
+				//to do ver si existen conexiones 
+				Thread.sleep(segundos*1000); 
+			}catch(Exception e){
+				
+			}
+			
+		}
+		
+	};
 	
 	private Conexion obtenerConexionDB(){ //metodo privado que se llamara por admin conexion
 		DBConnectionFactory factoryDB = new DBConnectionFactory();
@@ -38,7 +53,7 @@ public class Controlador_Pool  {
 		Conexion conexion=poolConexiones.crearConexion(conn);
 		return conexion;
 	}
-	 
-	private Pool poolConexiones= Pool.getInstance();
+	private static Pool poolConexiones= Pool.getInstance();
+	private Thread crearConexiones=new Thread(conexionesAgotadas);
 }
  

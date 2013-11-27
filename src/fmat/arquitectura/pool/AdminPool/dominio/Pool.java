@@ -6,18 +6,12 @@ import java.util.HashMap;
 
 public class Pool  {
 	
-	private static Pool INSTANCE=null;
+	private static Pool INSTANCE=createInstance();
 	
 	public static Pool getInstance() {
         return INSTANCE;
     }
 	
-	public synchronized static void createInstance(int segmentos, int tamañoSegmentos) {
-        if (INSTANCE == null) { 
-            INSTANCE = new Pool(segmentos,tamañoSegmentos);
-        }
-    }
- 
 	public Conexion obtenerConexionDisp() {
 		Conexion conexionDisponible=null;
 		for (int segmento=0;segmento<this.segmentos;segmento++){
@@ -73,15 +67,22 @@ public class Pool  {
 	 
 	private ArrayList<Conexion> conexiones;
 	private HashMap<Integer,ArrayList<Conexion>> piscinaConexiones;
-	private int segmentos, tamañoSegmentos;
+	private int segmentos=3, tamañoSegmentos=2;
 	private int segmentosCreados=0;
 	
-	private Pool(int segmentos, int tamañoSegmentos){
-		this.setSegmentos(segmentos);
-		this.setTamañoSegmentos(tamañoSegmentos);
+	private Pool(){
 		piscinaConexiones=new HashMap<Integer,ArrayList<Conexion>>();
 	}
 
+	private synchronized static Pool createInstance() {
+		INSTANCE = new Pool();
+		return INSTANCE;
+    }
+	
+	private void statusPiscina(){
+		int conexionesPiscina=this.segmentosCreados*this.tamañoSegmentos;
+	}
+ 
 	
 }
  
