@@ -16,18 +16,27 @@ public class Relation {
     private String controller;
     private String viewMethod;
     private String controllerMethod;
-    private ArrayList<String> parameters;
+    private ArrayList<String> parameters, types;
 
-    public Relation(String view, String controller, String viewMethod, String controllerMethod, ArrayList<String> parameters) {
+    public Relation(String view, String controller, String viewMethod, String controllerMethod, ArrayList<String> parameters,ArrayList<String> types) {
         this.view = view;
         this.controller = controller;
         this.viewMethod = viewMethod;
         this.controllerMethod = controllerMethod;
         this.parameters = parameters;
+	this.types = types;
     }
 
     public ArrayList<String> getParameters() {
         return parameters;
+    }
+
+    public ArrayList<String> getParametersType() {
+        return types;
+    }
+
+    public void setParametersType(ArrayList<String> types) {
+        this.types = types;
     }
     
     public String[] getParametersAsArray(){
@@ -36,6 +45,14 @@ public class Relation {
             params[i] = parameters.get(i);
         }
         return params;
+    }
+
+    public String[] getParametersTypeAsArray(){
+        String[] type = new String[types.size()];
+        for (int i = 0; i < types.size(); i++) {
+            type[i] = types.get(i);
+        }
+        return type;
     }
 
     public void setParameters(ArrayList<String> parameters) {

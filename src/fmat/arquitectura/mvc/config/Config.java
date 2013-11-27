@@ -60,6 +60,14 @@ public class Config {
         }
         return null;
     }
+
+    public  String[] getParametersTypeOf(String view, String viewMethod){
+        for (int i = 0; i < relations.size(); i++) {
+            if(relations.get(i).getView().equals(view) && relations.get(i).getViewMethod().equals(viewMethod))
+                return relations.get(i).getParametersTypeAsArray();
+        }
+        return null;
+    }
     
     public boolean sendParamsToController(String viewName, String viewMethodName, Object[] params, ApplicationView av){
         for (int i =0; i < params.length; i++){

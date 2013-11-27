@@ -83,6 +83,7 @@ public class JXMLReader {
         ArrayList<Relation> relations = new ArrayList();
         String controller="", view="", viewAction="", controllerAction="";
         ArrayList<String> parameters = new ArrayList();
+	ArrayList<String> types = new ArrayList();
         XMLNode param;
         int i=0;
         while(i<nodes.size()){
@@ -105,7 +106,8 @@ public class JXMLReader {
                     }   
                 }
                 parameters = getParameters(nodes.get(i));
-                relations.add(new Relation(view, controller, viewAction, controllerAction,parameters));
+		types = getParametersType(nodes.get(i));
+                relations.add(new Relation(view, controller, viewAction, controllerAction,parameters,type));
             }
             i++;
         }
@@ -126,4 +128,19 @@ public class JXMLReader {
         }
         return parameters;
     }
+
+    public ArrayList<String> getParametersType(XMLNode node){
+        ArrayList<String> type = new ArrayList();
+        ArrayList<XMLNode> childs = node.getChilds();
+        XMLNode parameter;
+        int id=1;
+        for (int i = 0; i < childs.size(); i++) {
+            if(childs.get(i).getName().equals("parameter")){
+                parameter = node.getChild("parameter", id);
+                type.add(parameter.getChild("type").getValue());
+                id++;
+            }
+        }
+        return type;
+    }	
 }
