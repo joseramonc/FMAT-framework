@@ -47,7 +47,7 @@ public class Relation {
         return params;
     }
 
-    public String[] getParametersTypeAsArray(){
+    public String[] getParametersAsArray(){
         String[] type = new String[types.size()];
         for (int i = 0; i < types.size(); i++) {
             type[i] = types.get(i);

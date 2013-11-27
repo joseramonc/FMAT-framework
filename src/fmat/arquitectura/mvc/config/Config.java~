@@ -62,7 +62,7 @@ public class Config {
     public  String[] getParametersTypeOf(String view, String viewMethod){
         for (int i = 0; i < relations.size(); i++) {
             if(relations.get(i).getView().equals(view) && relations.get(i).getViewMethod().equals(viewMethod))
-                return relations.get(i).getParametersTypeAsArray();
+                return relations.get(i).getParametersAsArray();
         }
         return null;
     }
