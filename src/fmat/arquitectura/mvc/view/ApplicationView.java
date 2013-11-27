@@ -13,7 +13,12 @@ public abstract class ApplicationView {
 	public Object returnedVariable;
         
 	public void sendToController(String action) throws NoSuchFieldException{
-            String[] variableNames = Config.getInstance().getParametersOf(this.getClass().getSimpleName(), action);
+//			System.out.println(this.getClass().getName());
+            String[] variableNames = Config.getInstance().getParametersOf(this.getClass().getName(), action);
+            for(int i = 0; i < variableNames.length; i++){
+            	
+            	System.out.println(variableNames[i]);
+            }
             Field[] actualVariables = this.getClass().getDeclaredFields();
             ArrayList<Field> coincidentalVariables = new ArrayList<Field>();
 
@@ -48,7 +53,7 @@ public abstract class ApplicationView {
                 }
                 }
                 setlastResponse(    
-                    Config.getInstance().sendParamsToController(this.getClass().getSimpleName(), action, params, this)
+                    Config.getInstance().sendParamsToController(this.getClass().getName(), action, params, this)
                 );
 	}
 

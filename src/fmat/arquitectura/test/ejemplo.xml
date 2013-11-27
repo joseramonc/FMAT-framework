@@ -4,7 +4,7 @@
 			fmat.arquitectura.test.testController
 		</controller>
 		<view>
-			ViewImplementer
+			fmat.arquitectura.test.ViewImplementer
 		</view>
 		<viewAction>
 			presionaBoton

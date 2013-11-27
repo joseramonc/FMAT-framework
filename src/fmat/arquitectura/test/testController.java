@@ -26,5 +26,9 @@ public class testController extends ApplicationController {
         return true;
     }
     
+    public boolean greetingWithParms(String string){
+    	System.out.println("hola config");
+    	return true;
+    }
     
 }

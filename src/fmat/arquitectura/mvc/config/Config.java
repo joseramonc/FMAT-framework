@@ -54,6 +54,8 @@ public class Config {
     public  String[] getParametersOf(String view, String viewMethod){
         for (int i = 0; i < relations.size(); i++) {
             if(relations.get(i).getView().equals(view) && relations.get(i).getViewMethod().equals(viewMethod))
+            	System.out.println(relations.get(i).getView());
+            	System.out.println("jejeje");
                 return relations.get(i).getParametersAsArray();
         }
         return null;
@@ -98,7 +100,7 @@ public class Config {
     private ApplicationController instanceController(String name) {
         try {
             Class c= Class.forName(name);
-            return (ApplicationController) c.newInstance();//assuming you aren't worried about constructor .
+            return (ApplicationController) c.newInstance();
         } catch (InstantiationException ex) {
             Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
