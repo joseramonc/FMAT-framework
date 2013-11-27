@@ -25,8 +25,7 @@ public class PoolConfigUpdater {
 	}
 
 	private void notifyPool() {
-		ConfigPool configPool = new ConfigPool();
-		configPool.notificarCambioPool(new PoolConfigInfo());
+		ConfigPool.getInstance().notificarCambioPool(new PoolConfigInfo());
 	}
 	
 	
