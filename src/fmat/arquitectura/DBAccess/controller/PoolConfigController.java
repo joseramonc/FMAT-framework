@@ -7,7 +7,7 @@ public class PoolConfigController {
 		private static PoolConfigController poolConfigController = new PoolConfigController();
 		private PoolConfigController(){}
 	
-		public PoolConfigController getPoolConfigController(){
+		public static PoolConfigController getPoolConfigController(){
 			return poolConfigController;
 		}
 		
