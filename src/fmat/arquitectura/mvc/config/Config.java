@@ -6,6 +6,7 @@ package fmat.arquitectura.mvc.config;
 
 import fmat.arquitectura.mvc.control.ApplicationController;
 import fmat.arquitectura.mvc.view.ApplicationView;
+import fmat.arquitectura.test.Alumno;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -54,8 +55,8 @@ public class Config {
     public  String[] getParametersOf(String view, String viewMethod){
         for (int i = 0; i < relations.size(); i++) {
             if(relations.get(i).getView().equals(view) && relations.get(i).getViewMethod().equals(viewMethod))
-            	System.out.println(relations.get(i).getView());
-            	System.out.println("jejeje");
+//            	System.out.println(relations.get(i).getView());
+//            	System.out.println("jejeje");
                 return relations.get(i).getParametersAsArray();
         }
         return null;
@@ -77,18 +78,24 @@ public class Config {
         String controllerName = getControllerName(viewName, viewMethodName);
         ApplicationController controller = instanceController(controllerName);
         try {
-            try {
-//                if (getParametersOf(viewName, viewMethodName).length <= 0){
-                    
-                    boolean response = (boolean)controller.getClass().getMethod(getControllerMethod(viewName, viewMethodName)).invoke(controller);
-                    if(response){
-                    	av.setReturnedVariable(controller.getreturnedVariable());
-                    } 
-                    return response;
-//                } else {
-//                    ejecutar metodo con parametros...
-//                }
-                
+        	try {
+            boolean response = false;
+//            	 String[] paramsValues = getParametersOf(viewName, viewMethodName);
+			if (params.length <= 0){
+				
+				response = (boolean)controller.getClass().getMethod(getControllerMethod(viewName, viewMethodName)).invoke(controller);
+            
+			} else {
+				
+				String[] paramsTypes = getParametersTypeOf(viewName, viewMethodName);
+				
+				
+				response = (boolean) controller.getClass().getMethod("greetingWithParms", Object[].class).invoke(controller, params);
+			}
+			if(response){
+				av.setReturnedVariable(controller.getreturnedVariable());
+			} 
+			return response;
             } catch (IllegalAccessException ex) {
                 Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalArgumentException ex) {

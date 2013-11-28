@@ -107,7 +107,7 @@ public class JXMLReader {
                 }
                 parameters = getParameters(nodes.get(i));
 		types = getParametersType(nodes.get(i));
-                relations.add(new Relation(view, controller, viewAction, controllerAction,parameters,type));
+                relations.add(new Relation(view, controller, viewAction, controllerAction,parameters,types));
             }
             i++;
         }

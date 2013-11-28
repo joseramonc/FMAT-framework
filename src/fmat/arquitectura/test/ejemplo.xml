@@ -10,7 +10,30 @@
 			presionaBoton
 		</viewAction>
 		<controllerAction>
-			saludaAlConfig
+			greetinWithParams
+		</controllerAction>
+		<parameter>
+			<id>
+				campos1
+			</id> 
+			<type>
+				java.lang.String
+			</type>
+		</parameter>
+	</relation>
+
+	<relation>
+		<controller>
+			fmat.arquitectura.test.testController
+		</controller>
+		<view>
+			fmat.arquitectura.test.ViewImplementer
+		</view>
+		<viewAction>
+			presionaBoton
+		</viewAction>
+		<controllerAction>
+			greetingWithParams
 		</controllerAction>
 		<parameter>
 			<id>
@@ -20,130 +43,5 @@
 				String
 			</type>
 		</parameter>
-		<parameter>
-			<id>
-				campos2
-			</id> 
-			<type>
-				String
-			</type>
-		</parameter>
-	</relation>
-
-	<relation>
-		<controller>
-			controllerName
-		</controller>
-		<view>
-			viewName
-		</view>
-		<viewAction>
-			action
-		</viewAction>
-		<controllerAction>
-			controllerAction
-		</controllerAction>
-		<parameter>
-			<id>
-				var_name
-			</id> 
-			<type>
-				type
-			</type>
-		</parameter>
-		<parameter>
-			<id>
-				var_name
-			</id> 
-			<type>
-				type
-			</type>
-		</parameter>
-		<parameter>
-			<id>
-				var_name
-			</id> 
-			<type>
-				type
-			</type>
-		</type>
-	</relation>
-
-	<relation>
-		<controller>
-			controllerName
-		</controller>
-		<view>
-			viewName
-		</view>
-		<viewAction>
-			action
-		</viewAction>
-		<controllerAction>
-			controllerAction
-		</controllerAction>
-		<parameter>
-			<id>
-				var_name
-			</id> 
-			<type>
-				type
-			</type>
-		</parameter>
-		<parameter>
-			<id>
-				var_name
-			</id> 
-			<type>
-				type
-			</type>
-		</parameter>
-		<parameter>
-			<id>
-				var_name
-			</id> 
-			<type>
-				type
-			</type>
-		</type>
-	</relation>
-
-	<relation>
-		<controller>
-			controllerName
-		</controller>
-		<view>
-			viewName
-		</view>
-		<viewAction>
-			action
-		</viewAction>
-		<controllerAction>
-			controllerAction
-		</controllerAction>
-		<parameter>
-			<id>
-				var_name
-			</id> 
-			<type>
-				type
-			</type>
-		</parameter>
-		<parameter>
-			<id>
-				var_name
-			</id> 
-			<type>
-				type
-			</type>
-		</parameter>
-		<parameter>
-			<id>
-				var_name
-			</id> 
-			<type>
-				type
-			</type>
-		</type>
 	</relation>
 </configuration>

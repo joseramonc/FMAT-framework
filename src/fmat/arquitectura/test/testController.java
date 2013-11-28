@@ -26,7 +26,7 @@ public class testController extends ApplicationController {
         return true;
     }
     
-    public boolean greetingWithParms(String string){
+    public boolean greetingWithParms(Object[] params){
     	System.out.println("hola config");
     	return true;
     }
