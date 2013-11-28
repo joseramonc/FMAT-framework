@@ -1,4 +1,4 @@
-ackage fmat.arquitectura.DBAccess.modelo;
+package fmat.arquitectura.DBAccess.modelo;
 
 import fmat.arquitectura.pool.configPool.ConfigPool;
 //quien instanciara las clases updaters y como notificar pool?
@@ -30,8 +30,7 @@ public class PoolConfigUpdater extends Thread{
 	}
 
 	private void notifyPool() {
-		ConfigPool configPool = new ConfigPool();
-		configPool.notificarCambioPool(new PoolConfigInfo());
+		ConfigPool.getInstance().notificarCambioPool(new PoolConfigInfo());
 	}
 	
 	
