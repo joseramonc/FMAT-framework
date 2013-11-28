@@ -1,20 +1,25 @@
 package fmat.arquitectura.DBAccess.modelo;
 
 import fmat.arquitectura.pool.configPool.ConfigPool;
-
-public class PoolConfigUpdater {
-	
+//quien instanciara las clases updaters y como notificar pool?
+//posiblemente los hilso sigan aun despues de terminado el programa
+public class PoolConfigUpdater extends Thread{
 	public PoolConfigUpdater(){
+		this.start();
+	}
+	
+	public void run(){
 		monitorChanges();
 	}
 	
 	private void monitorChanges(){
+		
 		PoolConfigFileMonitor poolConfigFileMonitor = new PoolConfigFileMonitor();
-		final int INTERVAL = 60000;
 		while(true){
 			if(poolConfigFileMonitor.hasConfigFileChanged()){
 				notifyPool();
 				try {
+					final int INTERVAL = 60000;
 					Thread.sleep(INTERVAL);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
