@@ -20,6 +20,10 @@ public class ViewImplementer extends ApplicationView{
     private View v;
     private String campos1;
     private String campos2;
+    private Integer numero;
+    private Alumno alumnoExtremo;
+    
+    
     
     public ViewImplementer(final View view) {
         setView(view);
@@ -48,8 +52,28 @@ public class ViewImplementer extends ApplicationView{
         if(islastResponse()){
             System.out.println(islastResponse());
             System.out.println(((Alumno)getReturnedVariable()).getMatricula());
+            System.out.println("---------------------------------------------");
         } else {
             System.out.println(islastResponse());
+            System.out.println("---------------------------------------------");
         }
     }
+    
+    public void eliminar() throws NoSuchFieldException{
+        campos1 = v.getJLabel1().getText();
+        campos2 = v.getJLabel2().getText();
+        numero = 40;
+        alumnoExtremo = new Alumno();
+        alumnoExtremo.setNombre("potenciano");
+        alumnoExtremo.setMatricula("1010101010");
+        sendToController("eliminar");
+    }
+    
+    public Alumno getalumnoExtremo(){
+    	return alumnoExtremo;
+    }
+
+	public Integer getnumero() {
+		return numero;
+	}
 }

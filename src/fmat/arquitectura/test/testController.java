@@ -12,11 +12,6 @@ import fmat.arquitectura.mvc.control.ApplicationController;
  */
 public class testController extends ApplicationController {
     
-    
-    public void add(){
-        getParams();
-    }
-    
     public boolean saludaAlConfig(){
         System.out.println("hola config");
         Alumno a = new Alumno();
@@ -26,9 +21,13 @@ public class testController extends ApplicationController {
         return true;
     }
     
-    public boolean greetingWithParms(Object[] params){
-    	System.out.println("hola config");
+    public boolean greetingWithParms(){
+    	Object[] a = getParams();
+    	for(int i = 0 ;i<a.length;i++){
+    		System.out.println(a[i].toString());
+    	}
     	return true;
     }
     
 }
+

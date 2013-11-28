@@ -11,10 +11,10 @@ import java.util.ArrayList;
  * @author Asus
  */
 public abstract class ApplicationController {
-    private ArrayList<Object> params;
+    private Object[] params;
     public Object returnedVariable;
-    
-    protected ArrayList getParams(){
+
+    protected Object[] getParams(){
         return params;
     }
     
@@ -30,7 +30,7 @@ public abstract class ApplicationController {
         return this;
     }
     
-    public void setParams(ArrayList<Object> newParams){
+    public void setParams(Object[] newParams){
         params = newParams;
     }
 }

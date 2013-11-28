@@ -10,16 +10,8 @@
 			presionaBoton
 		</viewAction>
 		<controllerAction>
-			greetinWithParams
+			saludaAlConfig
 		</controllerAction>
-		<parameter>
-			<id>
-				campos1
-			</id> 
-			<type>
-				java.lang.String
-			</type>
-		</parameter>
 	</relation>
 
 	<relation>
@@ -30,10 +22,10 @@
 			fmat.arquitectura.test.ViewImplementer
 		</view>
 		<viewAction>
-			presionaBoton
+			eliminar
 		</viewAction>
 		<controllerAction>
-			greetingWithParams
+			greetingWithParms
 		</controllerAction>
 		<parameter>
 			<id>
@@ -41,6 +33,30 @@
 			</id> 
 			<type>
 				String
+			</type>
+		</parameter>
+		<parameter>
+			<id>
+				campos2
+			</id> 
+			<type>
+				String
+			</type>
+		</parameter>
+		<parameter>
+			<id>
+				numero
+			</id> 
+			<type>
+				Integer
+			</type>
+		</parameter>
+		<parameter>
+			<id>
+				alumnoExtremo
+			</id> 
+			<type>
+				fmat.arquitectura.test.Alumno
 			</type>
 		</parameter>
 	</relation>

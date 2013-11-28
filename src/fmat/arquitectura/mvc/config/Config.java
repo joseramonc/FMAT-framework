@@ -36,20 +36,20 @@ public class Config {
     private void readXML() {
         JXMLReader reader = new JXMLReader(path);
         relations = reader.getRelations();
-        System.out.println("------------------------------------------------");
-        for (int i = 0; i < relations.size(); i++) {
-            System.out.println("------------------------------------------------");
-            System.out.println("Relation " + String.valueOf(i+1));
-            System.out.println("View: " + relations.get(i).getView());
-            System.out.println("Controller: " + relations.get(i).getController());
-            System.out.println("ViewAction: " + relations.get(i).getViewMethod());
-            System.out.println("ControllerAction: " + relations.get(i).getControllerMethod());
-            String[] params = relations.get(i).getParametersAsArray();
-            for (int j = 0; j < params.length; j++)
-                System.out.println("Parametro => " + params[j]);
-            System.out.println("------------------------------------------------");
-        }
-        System.out.println("------------------------------------------------");
+//        System.out.println("------------------------------------------------");
+//        for (int i = 0; i < relations.size(); i++) {
+//            System.out.println("------------------------------------------------");
+//            System.out.println("Relation " + String.valueOf(i+1));
+//            System.out.println("View: " + relations.get(i).getView());
+//            System.out.println("Controller: " + relations.get(i).getController());
+//            System.out.println("ViewAction: " + relations.get(i).getViewMethod());
+//            System.out.println("ControllerAction: " + relations.get(i).getControllerMethod());
+//            String[] params = relations.get(i).getParametersAsArray();
+//            for (int j = 0; j < params.length; j++)
+//                System.out.println("Parametro => " + params[j]);
+//            System.out.println("------------------------------------------------");
+//        }
+//        System.out.println("------------------------------------------------");
     }
     
     public  String[] getParametersOf(String view, String viewMethod){
@@ -72,7 +72,7 @@ public class Config {
     
     public boolean sendParamsToController(String viewName, String viewMethodName, Object[] params, ApplicationView av){
         for (int i =0; i < params.length; i++){
-            System.out.println(params[i]);
+            //System.out.println(params[i]);
         }
         
         String controllerName = getControllerName(viewName, viewMethodName);
@@ -81,16 +81,11 @@ public class Config {
         	try {
             boolean response = false;
 //            	 String[] paramsValues = getParametersOf(viewName, viewMethodName);
-			if (params.length <= 0){
-				
+			if (params.length == 0){
 				response = (boolean)controller.getClass().getMethod(getControllerMethod(viewName, viewMethodName)).invoke(controller);
-            
 			} else {
-				
-				String[] paramsTypes = getParametersTypeOf(viewName, viewMethodName);
-				
-				
-				response = (boolean) controller.getClass().getMethod("greetingWithParms", Object[].class).invoke(controller, params);
+				controller.setParams(params);
+				response = (boolean)controller.getClass().getMethod(getControllerMethod(viewName, viewMethodName)).invoke(controller);
 			}
 			if(response){
 				av.setReturnedVariable(controller.getreturnedVariable());

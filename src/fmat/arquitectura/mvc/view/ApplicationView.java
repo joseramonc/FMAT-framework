@@ -16,7 +16,6 @@ public abstract class ApplicationView {
 //			System.out.println(this.getClass().getName());
             String[] variableNames = Config.getInstance().getParametersOf(this.getClass().getName(), action);
             for(int i = 0; i < variableNames.length; i++){
-            	
             	System.out.println(variableNames[i]);
             }
             Field[] actualVariables = this.getClass().getDeclaredFields();

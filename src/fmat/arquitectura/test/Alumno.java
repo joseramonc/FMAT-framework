@@ -7,6 +7,11 @@ public class Alumno {
 	public String getMatricula() {
 		return matricula;
 	}
+	
+	public String toString(){
+		return nombre + "\n" + matricula;
+	}
+	
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}
