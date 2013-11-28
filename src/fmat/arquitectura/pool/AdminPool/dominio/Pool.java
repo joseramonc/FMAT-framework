@@ -14,7 +14,7 @@ public class Pool  {
 	
 	public Conexion obtenerConexionDisp() {
 		Conexion conexionDisponible=null;
-		for (int segmento=0;segmento<this.segmentos;segmento++){
+		for (int segmento=1;segmento<this.segmentos;segmento++){
 			if(piscinaConexiones.containsKey(segmento)){
 				conexiones= piscinaConexiones.get(segmento);
 				for(int i=0; i<conexiones.size();i++){
@@ -25,6 +25,8 @@ public class Pool  {
 						return conexionDisponible;	
 					}
 				}
+			}else{
+				break;
 			}
 		}
 		return conexionDisponible;
@@ -50,6 +52,7 @@ public class Pool  {
 	}
 
 	public void setSegmentos(int segmentos) {
+		this.segmentosCreados=0;
 		this.segmentos = segmentos;
 	}
 
@@ -63,6 +66,18 @@ public class Pool  {
 	
 	public int getSegmentosCreados(){
 		return this.segmentosCreados;
+	}
+	
+	public boolean conexionesRestantes(){
+		int conexionesRestantes=conexionesDisponibles();
+		int conexionesPiscina=this.segmentosCreados*this.tamañoSegmentos;
+		int porcentajeConRestante=conexionesRestantes/conexionesPiscina;
+		if(porcentajeConRestante>.2){
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
 	 
 	private ArrayList<Conexion> conexiones;
@@ -79,8 +94,23 @@ public class Pool  {
 		return INSTANCE;
     }
 	
-	private void statusPiscina(){
-		int conexionesPiscina=this.segmentosCreados*this.tamañoSegmentos;
+	
+	private int conexionesDisponibles(){
+		int conexionesRestantes=0;
+		for (int segmento=0;segmento<this.segmentos;segmento++){
+			if(piscinaConexiones.containsKey(segmento)){
+				conexiones= piscinaConexiones.get(segmento);
+				for(int i=0; i<conexiones.size();i++){
+					Conexion conexion=conexiones.get(i);
+					if(conexion.getEstado()){
+						conexionesRestantes+=1;
+					}
+				}
+			}else{
+				break;
+			}
+		}
+		return conexionesRestantes;
 	}
  
 	

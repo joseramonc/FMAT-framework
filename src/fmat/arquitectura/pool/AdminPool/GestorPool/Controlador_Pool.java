@@ -38,7 +38,12 @@ public class Controlador_Pool  {
 			int segundos=5;
 			try{
 				//to do ver si existen conexiones 
-				Thread.sleep(segundos*1000); 
+				if(!poolConexiones.conexionesRestantes()){
+					crearConexiones();
+					Thread.sleep(segundos*1000);
+				}else{
+					Thread.sleep(segundos*1000); 
+				}
 			}catch(Exception e){
 				
 			}
