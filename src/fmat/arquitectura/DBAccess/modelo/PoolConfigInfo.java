@@ -19,5 +19,5 @@ public class PoolConfigInfo {
 		PoolConfigReader poolConfigReader = new PoolConfigReader();
 		numSegmentos = poolConfigReader.getNumSegmentos();
 		tamSegmento = poolConfigReader.getTamSegmento();
-	}
+	} 
 }

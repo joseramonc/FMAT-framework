@@ -1,11 +1,23 @@
 package fmat.arquitectura.DBAccess.modelo;
 
-public class DBConfigUpdater {
+public class DBConfigUpdater extends Thread{
 	private DataBaseConfigInfo DBConfigInfo = DataBaseConfigInfo.getDataBaseConfigInfo();
-	private final int INTERVAL = 60000;
+	//private static DBConfigUpdater dbConfigUpdater;
+	
+	
+	public void run(){
+		monitorChanges();
+	}
+	
+	/*
+	public static DBConfigUpdater getDBConfigUpdater(){
+		if(dbConfigUpdater == null)
+			 dbConfigUpdater = new DBConfigUpdater();
+		return dbConfigUpdater;
+	}//*/
 	
 	public DBConfigUpdater(){
-		monitorChanges();
+		this.start();
 	}
 	
 	private void monitorChanges(){
@@ -15,6 +27,7 @@ public class DBConfigUpdater {
 				DBConfigInfo.update();
 			}
 			try {
+				final int INTERVAL = 60000;
 				Thread.sleep(INTERVAL);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -22,5 +35,7 @@ public class DBConfigUpdater {
 			}
 		}
 	}
+	
+	
 	
 }
