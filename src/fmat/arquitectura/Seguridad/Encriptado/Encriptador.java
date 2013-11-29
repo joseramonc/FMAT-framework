@@ -8,13 +8,13 @@ import java.security.spec.*;
 import javax.crypto.*; 
 import javax.crypto.spec.DESKeySpec;
 
-public class EncriptadorDESBase64 {
+//Encriptador DES Base64
+public class Encriptador {
     private Cipher encrypt;
     private Cipher decrypt;
-    private SecretKey key;
     private String keyTxt;
     
-    public EncriptadorDESBase64(String clave){
+    public Encriptador(String clave){
         keyTxt = clave; 
         try{ 
             encrypt = Cipher.getInstance("DES");
@@ -51,8 +51,7 @@ public class EncriptadorDESBase64 {
         } catch (javax.crypto.BadPaddingException e) { 
         } catch (IllegalBlockSizeException e) { 
         } catch (UnsupportedEncodingException e) { 
-        } catch (java.io.IOException e) { 
-        } 
+        }
         return null;
     }
     
@@ -79,7 +78,7 @@ public class EncriptadorDESBase64 {
     public static void main(String[] args) {
         String msj = "Mensaje a Encriptar"; 
         String key = "4d89g13j4j91j27c582ji69373y788r6"; 
-        EncriptadorDESBase64 obj = new EncriptadorDESBase64(key);   
+        Encriptador obj = new Encriptador(key);   
         System.out.println("Mensaje : " + msj); 
         String encript = obj.encriptar(msj); 
         System.out.println("Encriptado : " + encript); 

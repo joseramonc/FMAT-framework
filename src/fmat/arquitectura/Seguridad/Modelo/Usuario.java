@@ -1,20 +1,29 @@
 
-package fmat.arquitectura.Seguridad.UsuarioPerfilAccion;
+package fmat.arquitectura.Seguridad.Modelo;
 
 import java.util.ArrayList;
 
 public class Usuario {
+	private int id;
     private String nombre;
-    private String contrasena;
+    private String contraseña;
     private Perfil perfil;
     private ArrayList<Accion> listaAcciones;
 
-    public Usuario(String nombre, String contrasena, Perfil perfil, ArrayList<Accion> listaAcciones) {
+    public Usuario(String nombre, String contraseña, Perfil perfil, ArrayList<Accion> listaAcciones) {
         this.nombre = nombre;
-        this.contrasena = contrasena;
+        this.contraseña = contraseña;
         this.perfil = perfil;
         this.listaAcciones = listaAcciones;
     }
+    
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
     public String getNombre() {
         return nombre;
@@ -24,12 +33,12 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
     public Perfil getPerfil() {

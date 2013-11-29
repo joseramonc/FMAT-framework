@@ -1,9 +1,10 @@
 
-package fmat.arquitectura.Seguridad.UsuarioPerfilAccion;
+package fmat.arquitectura.Seguridad.Modelo;
 
 import java.util.ArrayList;
 
 public class Perfil {
+	private int id;
     private String nombre;
     private ArrayList<Accion> listaAcciones;
     
@@ -11,6 +12,14 @@ public class Perfil {
         this.nombre = nombre;
         this.listaAcciones = listaAcciones;
     }
+    
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
     public String getNombre() {
         return nombre;
@@ -27,6 +36,4 @@ public class Perfil {
     public void setListaAcciones(ArrayList<Accion> listaAcciones) {
         this.listaAcciones = listaAcciones;
     }
-    
-    
 }
