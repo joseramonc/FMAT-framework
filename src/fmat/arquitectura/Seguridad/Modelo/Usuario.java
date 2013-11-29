@@ -3,6 +3,8 @@ package fmat.arquitectura.Seguridad.Modelo;
 
 import java.util.ArrayList;
 
+import fmat.arquitectura.Seguridad.Controlador.ControladorUsuario;
+
 public class Usuario {
 	private int id;
     private String nombre;
@@ -28,7 +30,12 @@ public class Usuario {
     public String getNombre() {
         return nombre;
     }
-
+    
+    public boolean hasPermissionFor(String method) throws Exception{
+    	ControladorUsuario cu = new ControladorUsuario();
+    	return cu.estaAccionActivaEnUsuario(this, method);
+    }
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

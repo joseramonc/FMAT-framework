@@ -97,8 +97,12 @@ public class Login extends javax.swing.JFrame{
     	ControladorUsuario usrctrl = new ControladorUsuario();
     	try {
 			Usuario usr = usrctrl.login(usuarioTF.getText(), String.valueOf(PasswordTF.getPassword()));
-			new Acciones(usr).setVisible(true);
-			dispose();
+			if(usr instanceof Usuario){				
+				View v = new View(usr);
+				v.setVisible(true);
+				dispose();
+			}
+//			new Acciones(usr).setVisible(true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(this, e.getMessage());

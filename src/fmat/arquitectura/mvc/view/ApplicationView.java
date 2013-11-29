@@ -1,6 +1,8 @@
 package fmat.arquitectura.mvc.view;
 
+import fmat.arquitectura.Seguridad.Modelo.Usuario;
 import fmat.arquitectura.mvc.config.Config;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.logging.Logger;
 public abstract class ApplicationView {
 	private boolean lastResponse;
 	public Object returnedVariable;
+	private Usuario user;
         
 	public void sendToController(String action) throws NoSuchFieldException{
 //			System.out.println(this.getClass().getName());
@@ -52,7 +55,7 @@ public abstract class ApplicationView {
                 }
                 }
                 setlastResponse(    
-                    Config.getInstance().sendParamsToController(this.getClass().getName(), action, params, this)
+                    Config.getInstance().sendParamsToController(this.getClass().getName(), action, params, this, getUser())
                 );
 	}
 
@@ -70,5 +73,13 @@ public abstract class ApplicationView {
 
 		public void setReturnedVariable(Object returnedVariable) {
 			this.returnedVariable = returnedVariable;
+		}
+
+		public Usuario getUser() {
+			return user;
+		}
+
+		public void setUser(Usuario user) {
+			this.user = user;
 		}
 }
