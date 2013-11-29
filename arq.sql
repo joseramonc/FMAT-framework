@@ -30,7 +30,7 @@ CREATE TABLE `accion` (
 
 /*Data for the table `accion` */
 
-insert  into `accion` values (1,'vender'),(2,'comprar');
+insert  into `accion` values (1,'presionaBoton'),(2,'eliminar');
 
 /*Table structure for table `perfil` */
 
