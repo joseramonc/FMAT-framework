@@ -3,6 +3,7 @@ package fmat.arquitectura.test;
 import javax.swing.JOptionPane;
 
 import fmat.arquitectura.Seguridad.Controlador.ControladorUsuario;
+import fmat.arquitectura.Seguridad.Encriptado.Encriptador;
 import fmat.arquitectura.Seguridad.Modelo.Usuario;
 
 public class Login extends javax.swing.JFrame{
@@ -96,6 +97,7 @@ public class Login extends javax.swing.JFrame{
         // TODO add your handling code here:
     	ControladorUsuario usrctrl = new ControladorUsuario();
     	try {
+    		Encriptador.crearEncriptador("4d89g13j4j91j27c582ji69373y788r6");
 			Usuario usr = usrctrl.login(usuarioTF.getText(), String.valueOf(PasswordTF.getPassword()));
 			new Acciones(usr).setVisible(true);
 			dispose();

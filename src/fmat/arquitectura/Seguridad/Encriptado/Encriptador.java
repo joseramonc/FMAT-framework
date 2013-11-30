@@ -14,7 +14,9 @@ public class Encriptador {
     private Cipher decrypt;
     private String keyTxt;
     
-    public Encriptador(String clave){
+    private static Encriptador encriptador;
+    
+    private Encriptador(String clave){
         keyTxt = clave; 
         try{ 
             encrypt = Cipher.getInstance("DES");
@@ -36,6 +38,14 @@ public class Encriptador {
         }catch(NoSuchAlgorithmException ex){ 
         }catch(NoSuchPaddingException ex){ 
         }
+    }
+    
+    public static void crearEncriptador(String clave){
+    	encriptador = new Encriptador(clave);
+    }
+    
+    public static Encriptador getInstance(){
+    	return encriptador;
     }
     
     public String encriptar(String str){
@@ -71,17 +81,5 @@ public class Encriptador {
         } catch (java.io.IOException e) { 
         } 
         return null;
-    }
-    
-//    Prueba
-
-    public static void main(String[] args) {
-        String msj = "Mensaje a Encriptar"; 
-        String key = "4d89g13j4j91j27c582ji69373y788r6"; 
-        Encriptador obj = new Encriptador(key);   
-        System.out.println("Mensaje : " + msj); 
-        String encript = obj.encriptar(msj); 
-        System.out.println("Encriptado : " + encript); 
-        System.out.println("Desencriptado : " + obj.desencriptar(encript));
     }
 }
