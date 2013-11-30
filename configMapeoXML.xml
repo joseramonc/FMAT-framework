@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapeo>
+	<cliente size ="2" clase = "fmat.arquitectura.test.EjemploMapeoModeloPerfil" tabla = "perfil">					
+					<atributo1>id - ID/</atributo1>
+					<atributo2>nombre - Nombre/</atributo2>						
+	</cliente>
+	
+</mapeo>

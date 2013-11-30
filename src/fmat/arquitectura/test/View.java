@@ -6,7 +6,10 @@ package fmat.arquitectura.test;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JLabel;
+
+import fmat.arquitectura.Seguridad.Modelo.Usuario;
 /**
  *
  * @author Asus
@@ -17,9 +20,15 @@ private ViewImplementer vi;
     /**
      * Creates new form View
      */
-    public View() {
+	public View(){
+		initComponents();
+		vi = new ViewImplementer(this);
+	}
+
+    public View(Usuario usr) {
         initComponents();
         vi = new ViewImplementer(this);
+        vi.setUser(usr);
     }
     
 //    public View(ViewImplementer vi) {

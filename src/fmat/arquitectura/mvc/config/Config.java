@@ -4,6 +4,7 @@
  */
 package fmat.arquitectura.mvc.config;
 
+import fmat.arquitectura.Seguridad.Modelo.Usuario;
 import fmat.arquitectura.mvc.control.ApplicationController;
 import fmat.arquitectura.mvc.view.ApplicationView;
 import fmat.arquitectura.test.Alumno;
@@ -70,9 +71,19 @@ public class Config {
         return null;
     }
     
-    public boolean sendParamsToController(String viewName, String viewMethodName, Object[] params, ApplicationView av){
-        for (int i =0; i < params.length; i++){
-            //System.out.println(params[i]);
+    public boolean hasPermission(Usuario user, String viewMethodName){
+    	try {
+    		return user.hasPermissionFor(viewMethodName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+    }
+    
+    public boolean sendParamsToController(String viewName, String viewMethodName, Object[] params, ApplicationView av, Usuario user){
+        if(!hasPermission(user, viewMethodName)){
+        	return false;
         }
         
         String controllerName = getControllerName(viewName, viewMethodName);
