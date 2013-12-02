@@ -25,5 +25,27 @@ public class ConfigPool {
 		return INSTANCE;
     }
 	
+	Pool connectionPool;
+	
+	public void modifySegmSize(int size){
+		System.out.println("Número de conexiones por segmento: "  + connectionPool.getTamañoSegmentos());
+		System.out.println("Modificando...");
+		connectionPool.setTamañoSegmentos(size);
+		System.out.println("Tamaño de segmentos modificado a: " + connectionPool.getTamañoSegmentos());
+	}
+	
+	public void modifySegmNum(int number){
+		System.out.println("Cantidad total de segmentos: " + connectionPool.getSegmentos());
+		System.out.println("Modificando...");
+		connectionPool.setSegmentos(number);;
+		System.out.println("Total actual de segmentos: " + connectionPool.getSegmentos());
+	}
+	
+	PoolConfigInfo data;
+	
+	public void modifyPool(){
+		modifySegmSize(data.getTamSegmento());
+		modifySegmNum(data.getNumSegmentos());
+	}
 }
  
