@@ -18,9 +18,9 @@ public class DAOUsuario {
 			Connection conn = DBC.createConnection();
 			
 			Statement st = conn.createStatement();
-			String query = "INSERT INTO "+TABLA_USUARIOS+" (Alias, Contraseña, Perfil) VALUES ("+
+			String query = "INSERT INTO "+TABLA_USUARIOS+" (Alias, Contrasenia, Perfil) VALUES ("+
 							"'"+usuario.getNombre()+"',"+
-							"'"+usuario.getContraseña()+"',"+
+							"'"+usuario.getContrasenia()+"',"+
 							    usuario.getPerfil().getId()+")";
 			
 			st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
@@ -91,7 +91,7 @@ public class DAOUsuario {
 			
 			if(rs.next()){
 				int idUsuario = rs.getInt("ID");
-				String contrasena = rs.getString("Contraseña");
+				String contrasena = rs.getString("Contrasenia");
 				int idPerfil = rs.getInt("Perfil");
 				
 				DAOPerfil daoPerfil = new DAOPerfil();
@@ -156,7 +156,7 @@ public class DAOUsuario {
 			while(rs.next()){
 				int idUsuario = rs.getInt("ID");
 				String nombre = rs.getString("Alias");
-				String contrasena = rs.getString("Contraseña");
+				String contrasena = rs.getString("Contrasenia");
 				int idPerfil = rs.getInt("Perfil");
 				
 				DAOPerfil daoPerfil = new DAOPerfil();

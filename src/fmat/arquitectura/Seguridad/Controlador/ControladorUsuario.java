@@ -78,9 +78,9 @@ public class ControladorUsuario {
 		else{
 			Encriptador encriptador =  Encriptador.getInstance();
 			if(encriptador != null){
-				String contraseñaBD = encriptador.desencriptar(usuario.getContraseña());
-				if(contraseñaBD.compareTo(contrasena)!=0){
-					throw new Exception("Contraseña incorrecta.");
+				String contraseniaBD = encriptador.desencriptar(usuario.getContrasenia());
+				if(contraseniaBD.compareTo(contrasena)!=0){
+					throw new Exception("Contrasenia incorrecta.");
 				}
 			}
 			else {
