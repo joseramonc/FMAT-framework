@@ -10,24 +10,22 @@ import fmat.arquitectura.Seguridad.Modelo.Usuario;
 
 public class ControladorUsuario {
 
-	public void guardarUsuarioNuevo(Usuario usr){
+	public void guardarUsuarioNuevo(Usuario usuario){
 		DAOUsuario usuarioDAO = new DAOUsuario();
-		usuarioDAO.insertarUsuario(usr);
+		usuarioDAO.insertarUsuario(usuario);
+	}
+	public void eliminarUsuario(String nombreUsuario){
+		DAOUsuario usuarioDAO = new DAOUsuario();
+		usuarioDAO.eliminarUsuario(nombreUsuario);
+	}
+	public void actualizarUsuario(Usuario usuario){
+		DAOUsuario usuarioDAO = new DAOUsuario();
+		usuarioDAO.actualizarUsuario(usuario);
 	}
 	
-	public void eliminarUsuario(String nomUsua){
+	public Usuario buscarUsuarioPorNombre(String nombreUsuario){
 		DAOUsuario usuarioDAO = new DAOUsuario();
-		usuarioDAO.eliminarUsuario(nomUsua);
-	}
-	
-	public void actualizarUsuario(Usuario usr){
-		DAOUsuario usuarioDAO = new DAOUsuario();
-		usuarioDAO.actualizarUsuario(usr);
-	}
-	
-	public Usuario buscarUsuarioPorNombre(String nombre){
-		DAOUsuario usuarioDAO = new DAOUsuario();
-		return usuarioDAO.consultarUsuarioPorNombre(nombre);
+		return usuarioDAO.consultarUsuarioPorNombre(nombreUsuario);
 	}
 	
 	public List<Usuario> obtenerTodosLosUsuarios(){
@@ -47,7 +45,7 @@ public class ControladorUsuario {
 			return false;
 		}
 	}
-	//Funcion para saber si el usuario tiene la accion activada, primero determina si el perfil tiene la accion
+	//Funcion para saber si el usuario tiene la accion activada; primero determina si el perfil tiene la accion
 	public boolean estaAccionActivaEnUsuario(Usuario usuario, String nombreAccion)throws Exception{
 		
 		if(estaAccionEnUsuario(usuario, nombreAccion)){
@@ -58,10 +56,10 @@ public class ControladorUsuario {
 		}
 	}
 	//Funcion que devuelve la accion del usuario que se esta buscando
-	private Accion buscarAccionEnUsuario(Usuario usuario, String nAccion){
+	private Accion buscarAccionEnUsuario(Usuario usuario, String nombreAccion){
 		Accion accionEncontrada = null;
 		for(Accion accion: usuario.getListaAcciones()){
-			if(accion.getNombre().compareTo(nAccion)==0){
+			if(accion.getNombre().compareTo(nombreAccion)==0){
 				accionEncontrada = accion;
 			}
 		}
