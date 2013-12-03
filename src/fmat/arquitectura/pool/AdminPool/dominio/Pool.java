@@ -150,7 +150,6 @@ public class Pool  {
 			} 
 		}return respaldoConexionUso;
 		
-	}
-	
+	}	
 }
  

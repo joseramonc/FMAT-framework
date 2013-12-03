@@ -12,6 +12,9 @@ import fmat.arquitectura.pool.AdminPool.dominio.Conexion;
 public class Controlador_Pool  {
  
 	public static Controlador_Pool getInstance(){
+		if(poolConexiones.getSegmentosCreados()<poolConexiones.getSegmentos()){
+			crearConexiones();
+		}
 		return INSTANCE;
 	}
 	
@@ -72,19 +75,16 @@ public class Controlador_Pool  {
 		return INSTANCE;
     }
 	
-	private void crearConexiones(){
-		if(poolConexiones.getSegmentosCreados()<poolConexiones.getSegmentos()){
-			ArrayList<Conexion>  conexiones= poolConexiones.crearSegmentoConexiones();
-			for(int indice=0; indice<poolConexiones.getTamanioSegmentos();indice++){
-				Conexion conexion =obtenerConexionDB();
-				conexiones.add(conexion);
-				}
-			poolConexiones.asignarSegmentoCreado(conexiones);
+	private static void crearConexiones(){
+		ArrayList<Conexion>  conexiones= poolConexiones.crearSegmentoConexiones();
+		for(int indice=0; indice<poolConexiones.getTamanioSegmentos();indice++){
+			Conexion conexion =obtenerConexionDB();
+			conexiones.add(conexion);
 		}
-
+		poolConexiones.asignarSegmentoCreado(conexiones);
 	}
 	
-	private Conexion obtenerConexionDB(){ //metodo privado que se llamara por admin conexion
+	private static Conexion obtenerConexionDB(){ //metodo privado que se llamara por admin conexion
 		DBConnectionFactory factoryDB = new DBConnectionFactory();
 		Connection conn = factoryDB.createConnection();
 		Conexion conexion=poolConexiones.crearConexion(conn);
