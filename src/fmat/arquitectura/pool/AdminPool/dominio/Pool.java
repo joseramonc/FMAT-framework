@@ -81,7 +81,11 @@ public class Pool  {
 	}
 	 
 	private ArrayList<Conexion> conexiones;
+	private ArrayList<Conexion> conexionesSalvadas;
+	private ArrayList <Conexion> respaldoConexion;
+	private ArrayList <Conexion> respaldoConexionUso;
 	private HashMap<Integer,ArrayList<Conexion>> piscinaConexiones;
+	private HashMap<Integer,ArrayList<Conexion>> piscinaConexionesSalvadas;
 	private int segmentos=3, tamañoSegmentos=2;
 	private int segmentosCreados=0;
 	
@@ -112,7 +116,41 @@ public class Pool  {
 		}
 		return conexionesRestantes;
 	}
+	
+	public ArrayList <Conexion> conexiones_enUso(){
+		respaldoConexion= new ArrayList <Conexion>();
+		for (int segmento=1;segmento<this.segmentos;segmento++){
+			if(piscinaConexiones.containsKey(segmento)){
+				conexiones= piscinaConexiones.get(segmento);
+				for(int i=0; i<conexiones.size();i++){
+					Conexion conexion=conexiones.get(i);
+					if(!conexion.getEstado()){
+						respaldoConexion.add(conexion);
+					}
+				}
+			}else{
+				break;
+			}
+		} return respaldoConexion;
+	}
  
+	public ArrayList <Conexion> respaldoConexion_Uso() {
+		respaldoConexionUso = new ArrayList <Conexion>();
+		for(int segmento=1; segmento<this.segmentos;segmento++){
+			if(piscinaConexionesSalvadas.containsKey(respaldoConexion)){
+				conexionesSalvadas= piscinaConexionesSalvadas.get(respaldoConexion);
+				for(int i=0; i<conexiones.size(); i++){
+					Conexion conexionS = conexionesSalvadas.get(i);
+					if (!conexionS.getEstado()){
+						respaldoConexionUso.add(conexionS);
+					}
+				}
+			}else{
+				break;
+			} 
+		}return respaldoConexionUso;
+		
+	}
 	
 }
  

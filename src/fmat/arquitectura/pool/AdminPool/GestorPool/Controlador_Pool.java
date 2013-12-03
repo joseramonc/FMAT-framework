@@ -90,6 +90,27 @@ public class Controlador_Pool  {
 		Conexion conexion=poolConexiones.crearConexion(conn);
 		return conexion;
 	}
+
 	
+	public void cambiarConfigPool(int numeroSegmento, int tamañoSegmentos) {
+		poolConexiones.setSegmentos(numeroSegmento);
+		poolConexiones.setTamañoSegmentos(tamañoSegmentos);
+	}
+
+	public void reasignarConexion(int numeroSegmento, int tamañoSegmento) {
+		if (numeroSegmento > poolConexiones.getSegmentos()) {
+			ArrayList<Conexion> nuevaConexion = poolConexiones.crearSegmentoConexiones();
+			ArrayList<Conexion> respaldoconexion = poolConexiones.conexiones_enUso();
+			for (int indice = 0; indice < tamañoSegmento; indice++) {
+				Conexion conexion = respaldoconexion.get(indice);
+				nuevaConexion.add(conexion);
+			}
+			poolConexiones.asignarSegmentoCreado(respaldoconexion);
+			crearConexiones.run();
+		}else{
+		
+		}
+		
+		}
 }
  
