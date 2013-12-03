@@ -1,4 +1,4 @@
-package fmat.arquitectura.Seguridad.ContraseñaSegura;
+package fmat.arquitectura.Seguridad.ContrasenaSegura;
 
 public class PasswordSecurity {
 

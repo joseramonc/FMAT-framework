@@ -15,7 +15,7 @@ public class RequestConnectionFromPoolExample {
 		
 		
 		Controlador_Pool controller=new Controlador_Pool();
-		controller.crearConexiones();
+		controller..crearConexiones();
 		Conexion conexion=controller.obtenerConexion();
 		Connection conn=conexion.getConexion();
 		try{
