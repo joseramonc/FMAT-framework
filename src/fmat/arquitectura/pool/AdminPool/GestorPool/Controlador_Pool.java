@@ -27,7 +27,7 @@ public class Controlador_Pool  {
 	}
 	
 	
-	public void cambiarConfigPool(int numeroSegmento, int tamanioSegmentos) {
+	public boolean cambiarConfigPool(int numeroSegmento, int tamanioSegmentos) {
 		crearConexiones.stop();
 		ArrayList<Conexion> conexionRespaldo=poolConexiones.conexiones_enUso();
 		int numeroConexiones=conexionRespaldo.size()+1;
@@ -37,8 +37,10 @@ public class Controlador_Pool  {
 			poolConexiones.setSegmentos(numeroSegmento);
 			poolConexiones.setTamanioSegmentos(tamanioSegmentos);
 			crearConexiones.start();
+			return true;
 		}else{
 			new Exception("No se ha podido reconfigurar el pool");
+			return false;
 		}
 	}
 	
@@ -47,7 +49,7 @@ public class Controlador_Pool  {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			int segundos=600;
+			int segundos=5;
 			try{
 				if(!poolConexiones.conexionesRestantes()){
 					crearConexiones();
@@ -79,6 +81,7 @@ public class Controlador_Pool  {
 			for(int indice=0; indice<poolConexiones.getTamanioSegmentos();indice++){
 				Conexion conexion =obtenerConexionDB();
 				conexiones.add(conexion);
+				System.out.println("Numero conexión creada: "+(indice+1));
 				}
 			poolConexiones.asignarSegmentoCreado(conexiones);
 		}
@@ -93,17 +96,17 @@ public class Controlador_Pool  {
 	}
 	
 	private void asignarNumeroSegmentos(int size){
-		System.out.println("Numero de conexiones por segmento: "  + poolConexiones.getTamanioSegmentos());
+		System.out.println("Numero de conexiones por segmento: "  + poolConexiones.getSegmentos());
 		System.out.println("Modificando...");
-		poolConexiones.setTamanioSegmentos(size);
-		System.out.println("Tamanio de segmentos modificado a: " + poolConexiones.getTamanioSegmentos());
+		poolConexiones.setSegmentos(size);
+		System.out.println("Tamanio de segmentos modificado a: " + poolConexiones.getSegmentos());
 	}
 	
 	private void asignarTamSegmentos(int number){
-		System.out.println("Cantidad total de segmentos: " + poolConexiones.getSegmentos());
+		System.out.println("Cantidad total de segmentos: " + poolConexiones.getTamanioSegmentos());
 		System.out.println("Modificando...");
-		poolConexiones.setSegmentos(number);
-		System.out.println("Total actual de segmentos: " + poolConexiones.getSegmentos());
+		poolConexiones.setTamanioSegmentos(number);
+		System.out.println("Total actual de segmentos: " + poolConexiones.getTamanioSegmentos());
 	}
 	
 	private double[] requisitosReconfiguracion(int tamanioRespaldo,int tamanioSegmento){

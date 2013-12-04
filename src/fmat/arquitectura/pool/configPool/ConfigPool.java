@@ -2,7 +2,6 @@ package fmat.arquitectura.pool.configPool;
 
 import fmat.arquitectura.DBAccess.modelo.PoolConfigInfo;
 import fmat.arquitectura.pool.AdminPool.GestorPool.Controlador_Pool;
-import fmat.arquitectura.pool.AdminPool.dominio.Pool;
 
 
 public class ConfigPool {
@@ -14,13 +13,17 @@ public class ConfigPool {
 	
 	
 	public boolean notificarCambioPool(PoolConfigInfo datosConfig) {
-		return false;
+		int segmento=datosConfig.getNumSegmentos();
+		int tamanioSegmentos=datosConfig.getTamSegmento();
+		boolean cambioRealizado=controladorPool.cambiarConfigPool(segmento, tamanioSegmentos);
+		if(cambioRealizado){
+			return true;
+		}else{
+			return false;	
+		}
 	}
-	 
 	
-	Pool connectionPool;
-	
-	public void modifyPool(){
+	public void configurarPool(){
 		int segmentos,tamanioSegmentos;
 		segmentos=data.getNumSegmentos();
 		tamanioSegmentos=data.getTamSegmento();
@@ -29,7 +32,7 @@ public class ConfigPool {
 	
 
 	
-	private PoolConfigInfo data;
+	private PoolConfigInfo data= new PoolConfigInfo();
 	private Controlador_Pool controladorPool= Controlador_Pool.getInstance();
 	private static ConfigPool INSTANCE=createInstance();
 	

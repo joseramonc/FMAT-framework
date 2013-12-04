@@ -86,7 +86,7 @@ public class Pool  {
 		int conexionesRestantes=conexionesDisponibles();
 		int conexionesPiscina=this.segmentosCreados*this.tamanioSegmentos;
 		int porcentajeConRestante=conexionesRestantes/conexionesPiscina;
-		if(porcentajeConRestante>.2){
+		if(porcentajeConRestante>.2 || porcentajeConRestante==0){
 			return true;
 		}else{
 			return false;
