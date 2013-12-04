@@ -23,25 +23,32 @@ public class Controlador_Pool  {
 		asignarNumeroSegmentos(segmentos);
 		asignarTamSegmentos(tamanioSegmentos);
 		crearConexiones();
-		crearConexiones.run();
+		segmentoConexionesNuevas.run();
 	}
 	
 	
 	public boolean cambiarConfigPool(int numeroSegmento, int tamanioSegmentos) {
-		crearConexiones.stop();
+		segmentoConexionesNuevas.stop();
 		ArrayList<Conexion> conexionRespaldo=poolConexiones.conexiones_enUso();
-		int numeroConexiones=conexionRespaldo.size()+1;
-		double[] datosReconfig=requisitosReconfiguracion(numeroConexiones,tamanioSegmentos);
-		boolean poolReconfig=reconfigPool(conexionRespaldo,datosReconfig,numeroSegmento,tamanioSegmentos);
-		if(poolReconfig){
-			poolConexiones.setSegmentos(numeroSegmento);
-			poolConexiones.setTamanioSegmentos(tamanioSegmentos);
-			crearConexiones.start();
-			return true;
-		}else{
-			new Exception("No se ha podido reconfigurar el pool");
-			return false;
-		}
+		if(conexionRespaldo.size()!=0){
+			int numeroConexiones=conexionRespaldo.size()+1;
+			double[] datosReconfig=requisitosReconfiguracion(numeroConexiones,tamanioSegmentos);
+			boolean poolReconfig=reconfigPool(conexionRespaldo,datosReconfig,numeroSegmento,tamanioSegmentos);
+			if(poolReconfig){
+				poolConexiones.setSegmentos(numeroSegmento);
+				poolConexiones.setTamanioSegmentos(tamanioSegmentos);
+				segmentoConexionesNuevas.start();
+				return true;
+				}else{
+					new Exception("No se ha podido reconfigurar el pool");
+					return false;
+					}
+			}else{
+				poolConexiones.setSegmentos(numeroSegmento);
+				poolConexiones.setTamanioSegmentos(tamanioSegmentos);
+				crearConexiones();
+				return true;
+			}
 	}
 	
 	Runnable conexionesAgotadas=new Runnable(){
@@ -65,7 +72,7 @@ public class Controlador_Pool  {
 		
 	};
 	private static Pool poolConexiones= Pool.getInstance();
-	private Thread crearConexiones=new Thread(conexionesAgotadas);
+	private Thread segmentoConexionesNuevas=new Thread(conexionesAgotadas);
 	private static Controlador_Pool INSTANCE=createInstance();
 	
 	private Controlador_Pool(){}
