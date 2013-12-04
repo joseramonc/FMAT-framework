@@ -28,6 +28,7 @@ public class Controlador_Pool  {
 	
 	
 	public void cambiarConfigPool(int numeroSegmento, int tamanioSegmentos) {
+		crearConexiones.stop();
 		ArrayList<Conexion> conexionRespaldo=poolConexiones.conexiones_enUso();
 		int numeroConexiones=conexionRespaldo.size()+1;
 		double[] datosReconfig=requisitosReconfiguracion(numeroConexiones,tamanioSegmentos);
@@ -35,6 +36,7 @@ public class Controlador_Pool  {
 		if(poolReconfig){
 			poolConexiones.setSegmentos(numeroSegmento);
 			poolConexiones.setTamanioSegmentos(tamanioSegmentos);
+			crearConexiones.start();
 		}else{
 			new Exception("No se ha podido reconfigurar el pool");
 		}
