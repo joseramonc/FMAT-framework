@@ -21,10 +21,10 @@ public class ConfigPool {
 	Pool connectionPool;
 	
 	public void modifyPool(){
-		int segmentos,tamañoSegmentos;
+		int segmentos,tamanioSegmentos;
 		segmentos=data.getNumSegmentos();
-		tamañoSegmentos=data.getTamSegmento();
-		controladorPool.configurarPool(segmentos,tamañoSegmentos);
+		tamanioSegmentos=data.getTamSegmento();
+		controladorPool.configurarPool(segmentos,tamanioSegmentos);
 	}
 	
 

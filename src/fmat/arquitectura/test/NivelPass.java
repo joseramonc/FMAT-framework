@@ -1,6 +1,6 @@
 package fmat.arquitectura.test;
 
-import fmat.arquitectura.Seguridad.ContraseñaSegura.PasswordSecurity;
+import fmat.arquitectura.Seguridad.ContrasenaSegura.PasswordSecurity;
 
 /**
  *

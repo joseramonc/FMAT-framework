@@ -8,13 +8,13 @@ import fmat.arquitectura.Seguridad.Controlador.ControladorUsuario;
 public class Usuario {
 	private int id;
     private String nombre;
-    private String contraseña;
+    private String contrasenia;
     private Perfil perfil;
     private ArrayList<Accion> listaAcciones;
 
-    public Usuario(String nombre, String contraseña, Perfil perfil, ArrayList<Accion> listaAcciones) {
+    public Usuario(String nombre, String contrasenia, Perfil perfil, ArrayList<Accion> listaAcciones) {
         this.nombre = nombre;
-        this.contraseña = contraseña;
+        this.contrasenia = contrasenia;
         this.perfil = perfil;
         this.listaAcciones = listaAcciones;
     }
@@ -40,12 +40,12 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public Perfil getPerfil() {

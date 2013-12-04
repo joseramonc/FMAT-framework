@@ -27,10 +27,10 @@ public class Controlador_Pool  {
 	}
 	
 	public void asignarNumeroSegmentos(int size){
-		System.out.println("Numero de conexiones por segmento: "  + poolConexiones.getTamañoSegmentos());
+		System.out.println("Numero de conexiones por segmento: "  + poolConexiones.getTamanioSegmentos());
 		System.out.println("Modificando...");
-		poolConexiones.setTamañoSegmentos(size);
-		System.out.println("Tamaño de segmentos modificado a: " + poolConexiones.getTamañoSegmentos());
+		poolConexiones.setTamanioSegmentos(size);
+		System.out.println("Tamanio de segmentos modificado a: " + poolConexiones.getTamanioSegmentos());
 	}
 	
 	public void asignarTamSegmentos(int number){
@@ -75,7 +75,7 @@ public class Controlador_Pool  {
 	public void crearConexiones(){
 		if(poolConexiones.getSegmentosCreados()<poolConexiones.getSegmentos()){
 			ArrayList<Conexion>  conexiones= poolConexiones.crearSegmentoConexiones();
-			for(int indice=0; indice<poolConexiones.getTamañoSegmentos();indice++){
+			for(int indice=0; indice<poolConexiones.getTamanioSegmentos();indice++){
 				Conexion conexion =obtenerConexionDB();
 				conexiones.add(conexion);
 				}
@@ -92,16 +92,16 @@ public class Controlador_Pool  {
 	}
 
 	
-	public void cambiarConfigPool(int numeroSegmento, int tamañoSegmentos) {
+	public void cambiarConfigPool(int numeroSegmento, int tamanioSegmentos) {
 		poolConexiones.setSegmentos(numeroSegmento);
-		poolConexiones.setTamañoSegmentos(tamañoSegmentos);
+		poolConexiones.setTamanioSegmentos(tamanioSegmentos);
 	}
 
-	public void reasignarConexion(int numeroSegmento, int tamañoSegmento) {
+	public void reasignarConexion(int numeroSegmento, int tamanioSegmento) {
 		if (numeroSegmento > poolConexiones.getSegmentos()) {
 			ArrayList<Conexion> nuevoSegmento = poolConexiones.crearSegmentoConexiones();
 			ArrayList<Conexion> respaldoconexion = poolConexiones.conexiones_enUso();
-			for (int indice = 0; indice < tamañoSegmento; indice++) {
+			for (int indice = 0; indice < tamanioSegmento; indice++) {
 				Conexion conexion = respaldoconexion.get(indice);
 				nuevoSegmento.add(conexion);
 			}

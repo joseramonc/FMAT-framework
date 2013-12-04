@@ -204,7 +204,7 @@ public class DAOPerfil {
 			e.printStackTrace();
 		}
 	}
-	public void actualizarAccionDePerfil(Accion accion, int idPerfil){//Cual es su objetivo con exactitud?
+	public void actualizarAccionDePerfil(Accion accion, int idPerfil){
 		try {
 			DBConnectionFactory DBC = new DBConnectionFactory();
 			Connection conn = DBC.createConnection();
@@ -253,23 +253,6 @@ public class DAOPerfil {
 		}
 		
 		return listaAcciones;
-	}
-	public boolean estaAccionEnPerfil(int idPerfil, int idAccion){
-		try {
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
-			
-			Statement st = conn.createStatement();
-			String query = "SELECT * FROM "+TABLA_PERFILACCION+" WHERE ID = "+idPerfil;
-		
-			ResultSet rs = st.executeQuery(query);
-			if(rs.next()){
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
 	}
 	
 	final String TABLA_PERFILES = "perfil";

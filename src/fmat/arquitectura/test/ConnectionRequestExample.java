@@ -16,7 +16,7 @@ public class ConnectionRequestExample {
 		Connection conn = DBC.createConnection();
 		
 		Statement st = conn.createStatement();
-		String query = "select * from perfil";
+		String query = "select * from perfil where perfil.Nombre = \"Maestro\"";
 		
 			ResultSet rs = st.executeQuery(query);
 			rs.next();

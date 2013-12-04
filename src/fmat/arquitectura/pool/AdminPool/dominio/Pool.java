@@ -61,12 +61,12 @@ public class Pool  {
 		this.segmentos = segmentos;
 	}
 
-	public int getTamañoSegmentos() {
-		return tamañoSegmentos;
+	public int getTamanioSegmentos() {
+		return tamanioSegmentos;
 	}
 
-	public void setTamañoSegmentos(int tamañoSegmentos) {
-		this.tamañoSegmentos = tamañoSegmentos;
+	public void setTamanioSegmentos(int tamanioSegmentos) {
+		this.tamanioSegmentos = tamanioSegmentos;
 	}
 	
 	public int getSegmentosCreados(){
@@ -75,7 +75,7 @@ public class Pool  {
 	
 	public boolean conexionesRestantes(){
 		int conexionesRestantes=conexionesDisponibles();
-		int conexionesPiscina=this.segmentosCreados*this.tamañoSegmentos;
+		int conexionesPiscina=this.segmentosCreados*this.tamanioSegmentos;
 		int porcentajeConRestante=conexionesRestantes/conexionesPiscina;
 		if(porcentajeConRestante>.2){
 			return true;
@@ -91,7 +91,7 @@ public class Pool  {
 	private ArrayList <Conexion> respaldoConexionUso;
 	private HashMap<Integer,ArrayList<Conexion>> piscinaConexiones;
 	private HashMap<Integer,ArrayList<Conexion>> piscinaConexionesSalvadas;
-	private int segmentos=3, tamañoSegmentos=2;
+	private int segmentos=3, tamanioSegmentos=2;
 	private int segmentosCreados=0;
 	
 	private Pool(){
