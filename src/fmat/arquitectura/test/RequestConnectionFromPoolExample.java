@@ -14,7 +14,7 @@ public class RequestConnectionFromPoolExample {
 		// TODO Auto-generated method stub
 		
 		
-		Controlador_Pool controller=new Controlador_Pool();
+		Controlador_Pool controller= new Controlador_Pool();
 		controller.crearConexiones();
 		Conexion conexion=controller.obtenerConexion();
 		Connection conn=conexion.getConexion();

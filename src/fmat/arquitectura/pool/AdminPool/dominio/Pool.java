@@ -43,6 +43,11 @@ public class Pool  {
 		return this.conexiones=new ArrayList<Conexion>();
 	}
 	
+	public ArrayList<Conexion> eliminarSegmentoConexiones(){
+		segmentosCreados-=1;
+		return this.conexiones=new ArrayList<Conexion>();
+	}
+	
 	public void asignarSegmentoCreado(ArrayList<Conexion> conexiones){
 		this.conexiones=conexiones;
 		piscinaConexiones.put(segmentosCreados, this.conexiones);

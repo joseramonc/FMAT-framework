@@ -65,14 +65,14 @@ public class Controlador_Pool  {
 	private Thread crearConexiones=new Thread(conexionesAgotadas);
 	private static Controlador_Pool INSTANCE=createInstance();
 	
-	private Controlador_Pool(){
+	public Controlador_Pool(){
 	}
 	private synchronized static Controlador_Pool createInstance() {
 		INSTANCE = new Controlador_Pool();
 		return INSTANCE;
     }
 	
-	private void crearConexiones(){
+	public void crearConexiones(){
 		if(poolConexiones.getSegmentosCreados()<poolConexiones.getSegmentos()){
 			ArrayList<Conexion>  conexiones= poolConexiones.crearSegmentoConexiones();
 			for(int indice=0; indice<poolConexiones.getTamañoSegmentos();indice++){
@@ -99,18 +99,25 @@ public class Controlador_Pool  {
 
 	public void reasignarConexion(int numeroSegmento, int tamañoSegmento) {
 		if (numeroSegmento > poolConexiones.getSegmentos()) {
-			ArrayList<Conexion> nuevaConexion = poolConexiones.crearSegmentoConexiones();
+			ArrayList<Conexion> nuevoSegmento = poolConexiones.crearSegmentoConexiones();
 			ArrayList<Conexion> respaldoconexion = poolConexiones.conexiones_enUso();
 			for (int indice = 0; indice < tamañoSegmento; indice++) {
 				Conexion conexion = respaldoconexion.get(indice);
-				nuevaConexion.add(conexion);
+				nuevoSegmento.add(conexion);
 			}
 			poolConexiones.asignarSegmentoCreado(respaldoconexion);
 			crearConexiones.run();
 		}else{
-		
+		if (numeroSegmento < poolConexiones.getSegmentos()){
+			ArrayList<Conexion> nuevoSegmento = poolConexiones.eliminarSegmentoConexiones();
+			ArrayList<Conexion> respaldoconexion = poolConexiones.conexiones_enUso();
+			for (int indice = 0; indice < tamañoSegmento; indice++) {
+				Conexion conexion = respaldoconexion.get(indice);
+				nuevoSegmento.add(conexion);
 		}
-		
+			poolConexiones.asignarSegmentoCreado(respaldoconexion);
+			crearConexiones.run();
+		}
 		}
 }
- 
+}
