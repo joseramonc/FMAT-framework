@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Pool  {
 	
-	private static Pool INSTANCE=createInstance();
+	
 	
 	public static Pool getInstance() {
         return INSTANCE;
@@ -43,8 +43,7 @@ public class Pool  {
 		return this.conexiones=new ArrayList<Conexion>();
 	}
 	
-	public ArrayList<Conexion> eliminarSegmentoConexiones(){
-		segmentosCreados-=1;
+	public ArrayList<Conexion> crearSegmento(){
 		return this.conexiones=new ArrayList<Conexion>();
 	}
 	
@@ -52,6 +51,12 @@ public class Pool  {
 		this.conexiones=conexiones;
 		piscinaConexiones.put(segmentosCreados, this.conexiones);
 	}
+	
+	public void asignarSegmentoRespaldo(int segmento,ArrayList<Conexion> conexiones){
+		this.conexiones=conexiones;
+		piscinaConexiones.put(segmento, this.conexiones);
+	}
+	
 	public int getSegmentos() {
 		return segmentos;
 	}
@@ -73,6 +78,10 @@ public class Pool  {
 		return this.segmentosCreados;
 	}
 	
+	public void setSegmentosCreados(int segmentosCreados){
+		this.segmentosCreados=segmentosCreados;
+	}
+	
 	public boolean conexionesRestantes(){
 		int conexionesRestantes=conexionesDisponibles();
 		int conexionesPiscina=this.segmentosCreados*this.tamanioSegmentos;
@@ -84,15 +93,28 @@ public class Pool  {
 		}
 		
 	}
+	
+	public ArrayList <Conexion> conexiones_enUso(){
+		respaldoConexion= new ArrayList <Conexion>();
+		for (int segmento=1;segmento<this.segmentos;segmento++){
+			if(piscinaConexiones.containsKey(segmento)){
+				conexiones= piscinaConexiones.get(segmento);
+				for(int i=0; i<conexiones.size();i++){
+					Conexion conexion=conexiones.get(i);
+					if(!conexion.getEstado()){
+						respaldoConexion.add(conexion);
+					}
+				}
+			}
+		} return respaldoConexion;
+	}
 	 
 	private ArrayList<Conexion> conexiones;
-	private ArrayList<Conexion> conexionesSalvadas;
 	private ArrayList <Conexion> respaldoConexion;
-	private ArrayList <Conexion> respaldoConexionUso;
 	private HashMap<Integer,ArrayList<Conexion>> piscinaConexiones;
-	private HashMap<Integer,ArrayList<Conexion>> piscinaConexionesSalvadas;
-	private int segmentos=3, tamanioSegmentos=2;
+	private int segmentos, tamanioSegmentos;
 	private int segmentosCreados=0;
+	private static Pool INSTANCE=createInstance();
 	
 	private Pool(){
 		piscinaConexiones=new HashMap<Integer,ArrayList<Conexion>>();
@@ -122,40 +144,7 @@ public class Pool  {
 		return conexionesRestantes;
 	}
 	
-	public ArrayList <Conexion> conexiones_enUso(){
-		respaldoConexion= new ArrayList <Conexion>();
-		for (int segmento=1;segmento<this.segmentos;segmento++){
-			if(piscinaConexiones.containsKey(segmento)){
-				conexiones= piscinaConexiones.get(segmento);
-				for(int i=0; i<conexiones.size();i++){
-					Conexion conexion=conexiones.get(i);
-					if(!conexion.getEstado()){
-						respaldoConexion.add(conexion);
-					}
-				}
-			}else{
-				break;
-			}
-		} return respaldoConexion;
-	}
- 
-	public ArrayList <Conexion> respaldoConexion_Uso() {
-		respaldoConexionUso = new ArrayList <Conexion>();
-		for(int segmento=1; segmento<this.segmentos;segmento++){
-			if(piscinaConexionesSalvadas.containsKey(respaldoConexion)){
-				conexionesSalvadas= piscinaConexionesSalvadas.get(respaldoConexion);
-				for(int i=0; i<conexiones.size(); i++){
-					Conexion conexionS = conexionesSalvadas.get(i);
-					if (!conexionS.getEstado()){
-						respaldoConexionUso.add(conexionS);
-					}
-				}
-			}else{
-				break;
-			} 
-		}return respaldoConexionUso;
-		
-	}
+	
 	
 }
  

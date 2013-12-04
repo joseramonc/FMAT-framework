@@ -15,7 +15,7 @@ public class Controlador_Pool  {
 		return INSTANCE;
 	}
 	
-	public Conexion obtenerConexion() {
+	public synchronized  Conexion obtenerConexion() {
 		return poolConexiones.obtenerConexionDisp();
 	}
 	
@@ -26,20 +26,19 @@ public class Controlador_Pool  {
 		crearConexiones.run();
 	}
 	
-	public void asignarNumeroSegmentos(int size){
-		System.out.println("Numero de conexiones por segmento: "  + poolConexiones.getTamanioSegmentos());
-		System.out.println("Modificando...");
-		poolConexiones.setTamanioSegmentos(size);
-		System.out.println("Tamanio de segmentos modificado a: " + poolConexiones.getTamanioSegmentos());
-	}
 	
-	public void asignarTamSegmentos(int number){
-		System.out.println("Cantidad total de segmentos: " + poolConexiones.getSegmentos());
-		System.out.println("Modificando...");
-		poolConexiones.setSegmentos(number);;
-		System.out.println("Total actual de segmentos: " + poolConexiones.getSegmentos());
+	public void cambiarConfigPool(int numeroSegmento, int tamanioSegmentos) {
+		ArrayList<Conexion> conexionRespaldo=poolConexiones.conexiones_enUso();
+		int numeroConexiones=conexionRespaldo.size()+1;
+		double[] datosReconfig=requisitosReconfiguracion(numeroConexiones,tamanioSegmentos);
+		boolean poolReconfig=reconfigPool(conexionRespaldo,datosReconfig,numeroSegmento,tamanioSegmentos);
+		if(poolReconfig){
+			poolConexiones.setSegmentos(numeroSegmento);
+			poolConexiones.setTamanioSegmentos(tamanioSegmentos);
+		}else{
+			new Exception("No se ha podido reconfigurar el pool");
+		}
 	}
-	
 	
 	Runnable conexionesAgotadas=new Runnable(){
 
@@ -65,14 +64,14 @@ public class Controlador_Pool  {
 	private Thread crearConexiones=new Thread(conexionesAgotadas);
 	private static Controlador_Pool INSTANCE=createInstance();
 	
-	public Controlador_Pool(){
-	}
+	private Controlador_Pool(){}
+	
 	private synchronized static Controlador_Pool createInstance() {
 		INSTANCE = new Controlador_Pool();
 		return INSTANCE;
     }
 	
-	public void crearConexiones(){
+	private void crearConexiones(){
 		if(poolConexiones.getSegmentosCreados()<poolConexiones.getSegmentos()){
 			ArrayList<Conexion>  conexiones= poolConexiones.crearSegmentoConexiones();
 			for(int indice=0; indice<poolConexiones.getTamanioSegmentos();indice++){
@@ -90,34 +89,66 @@ public class Controlador_Pool  {
 		Conexion conexion=poolConexiones.crearConexion(conn);
 		return conexion;
 	}
-
 	
-	public void cambiarConfigPool(int numeroSegmento, int tamanioSegmentos) {
-		poolConexiones.setSegmentos(numeroSegmento);
-		poolConexiones.setTamanioSegmentos(tamanioSegmentos);
+	private void asignarNumeroSegmentos(int size){
+		System.out.println("Numero de conexiones por segmento: "  + poolConexiones.getTamanioSegmentos());
+		System.out.println("Modificando...");
+		poolConexiones.setTamanioSegmentos(size);
+		System.out.println("Tamanio de segmentos modificado a: " + poolConexiones.getTamanioSegmentos());
+	}
+	
+	private void asignarTamSegmentos(int number){
+		System.out.println("Cantidad total de segmentos: " + poolConexiones.getSegmentos());
+		System.out.println("Modificando...");
+		poolConexiones.setSegmentos(number);
+		System.out.println("Total actual de segmentos: " + poolConexiones.getSegmentos());
+	}
+	
+	private double[] requisitosReconfiguracion(int tamanioRespaldo,int tamanioSegmento){
+		double[] requisitosReconfigPool=new double[3];
+		double segmentosNecesarios=(double)tamanioRespaldo/tamanioSegmento;
+		double segmentosCompletos=tamanioRespaldo/tamanioSegmento;
+		double conexionesFaltantes=tamanioRespaldo%tamanioSegmento;
+		requisitosReconfigPool[0]=segmentosNecesarios;
+		requisitosReconfigPool[1]=segmentosCompletos;
+		requisitosReconfigPool[2]=conexionesFaltantes;
+		return requisitosReconfigPool;
+	}
+	
+	private boolean reconfigPool(ArrayList<Conexion> respaldo,double[] requisitosReconfig, int segmentos,int tamanioSegmentos){
+		int segmentosCreados=0;
+		double segmentosNecesarios=requisitosReconfig[0];
+		double segmentosCompletos=requisitosReconfig[1];
+		double conexionesFaltantes=requisitosReconfig[2];
+		if(segmentosNecesarios<segmentos){
+			for(int indice=1; indice<=segmentosCompletos;indice++){
+				ArrayList<Conexion> nuevoSegmento= new ArrayList<Conexion>();
+				for(int segm=0;segm<tamanioSegmentos;segm++){
+					nuevoSegmento.add(respaldo.get(segm));
+					respaldo.remove(segm);
+				}
+				poolConexiones.asignarSegmentoRespaldo(indice, nuevoSegmento);
+				segmentosCreados++;
+			}
+			if(conexionesFaltantes!=0){
+				ArrayList<Conexion> nuevoSegmento= new ArrayList<Conexion>();
+				for(int ind=0;ind<respaldo.size();ind++){
+					nuevoSegmento.add(respaldo.get(ind));
+				}
+				respaldo.removeAll(respaldo);
+				double conexionesNecCrear=tamanioSegmentos-conexionesFaltantes;
+				for(int con=0;con<conexionesNecCrear;con++){
+					Conexion conexion =obtenerConexionDB();
+					nuevoSegmento.add(conexion);
+				}
+				poolConexiones.asignarSegmentoRespaldo(segmentosCreados, nuevoSegmento);
+			}
+			return true;
+		}else{
+			return false;
+		}
 	}
 
-	public void reasignarConexion(int numeroSegmento, int tamanioSegmento) {
-		if (numeroSegmento > poolConexiones.getSegmentos()) {
-			ArrayList<Conexion> nuevoSegmento = poolConexiones.crearSegmentoConexiones();
-			ArrayList<Conexion> respaldoconexion = poolConexiones.conexiones_enUso();
-			for (int indice = 0; indice < tamanioSegmento; indice++) {
-				Conexion conexion = respaldoconexion.get(indice);
-				nuevoSegmento.add(conexion);
-			}
-			poolConexiones.asignarSegmentoCreado(respaldoconexion);
-			crearConexiones.run();
-		}else{
-		if (numeroSegmento < poolConexiones.getSegmentos()){
-			ArrayList<Conexion> nuevoSegmento = poolConexiones.eliminarSegmentoConexiones();
-			ArrayList<Conexion> respaldoconexion = poolConexiones.conexiones_enUso();
-			for (int indice = 0; indice < tamañoSegmento; indice++) {
-				Conexion conexion = respaldoconexion.get(indice);
-				nuevoSegmento.add(conexion);
-		}
-			poolConexiones.asignarSegmentoCreado(respaldoconexion);
-			crearConexiones.run();
-		}
-		}
-}
+	
+	
 }
