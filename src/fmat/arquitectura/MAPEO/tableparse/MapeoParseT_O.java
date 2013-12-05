@@ -7,25 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.lang.reflect.*;
 
-public class MapeoCT {
+public class MapeoParseT_O {
 
 	/**
 	 * @param args
 	 */
 	ConexionBDMapeo BD;
-	public MapeoCT(){
+	public MapeoParseT_O(){
 		BD = new ConexionBDMapeo();
-	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-//		MapeoCT map = new MapeoCT();
-//	Class<?> ob =	map.getIntanceObject("fmatModelo.cliente");
-//		if(ob ==null){
-//			System.out.println("HOLAS");
-//		}else{
-//			System.out.println("HEYYY");
-//		}
 	}
 	
 	private Class<?> getObjectClass(String Classname) {
@@ -61,8 +50,13 @@ public class MapeoCT {
 		return obj;
 	}
 	
+	public ArrayList<Object> getObjetosDeTabla(instruccionMapeo instruccion){
+		ArrayList<Object> objetos = new ArrayList<>();
+		objetos = objetosDeTipo(instruccion);
+		return objetos;
+	}
 	
-	public ArrayList<Object> objetosDeTipo(instruccionMapeo instruccion){
+	private ArrayList<Object> objetosDeTipo(instruccionMapeo instruccion){
 		ArrayList<Object> objetos = new ArrayList<>();
 		
 		

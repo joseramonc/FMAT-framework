@@ -66,14 +66,4 @@ public class instruccionMapeo {
 		
 	}
 
-	public static void main(String[] args) {
-		
-	//	instruccionMapeo a = new instruccionMapeo();
-	
-
-	}
-	
-	
-	
-
 }
