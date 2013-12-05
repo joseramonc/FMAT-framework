@@ -7,8 +7,8 @@ public class instruccionMapeo {
 	/**
 	 * @param args
 	 */
-	ArrayList<String[][]> instruccionAtributo;
-	ArrayList<String[][]> instruccionSetAtributos;
+	private ArrayList<String[][]> instruccionAtributo;
+	private ArrayList<String[][]> instruccionSetAtributos;
 	
 	
 	public instruccionMapeo(){		
@@ -16,22 +16,7 @@ public class instruccionMapeo {
 		instruccionSetAtributos = new ArrayList<>();
 	}
 
-/*
-	public void llenarIntrucciones(){
-		String [][] mapeo = { {"Clientes","Persona"},
-							{"nombre","name"},
-							{"apellidos","lastName"},
-							{"edad","age"},		
-								};
-		System.out.println("filas: " + mapeo.length + "Columnas: " + mapeo[0].length);
-//		for (int i = 0; i < mapeo.length; i++) {
-//			for (int j = 0; j < mapeo.length; j++) {
-//				System.out.println(mapeo[i][j]);
-//			}
-//		}
-		
-	}
-*/
+
 	public void agregarInstruccion(String [][] inst){
 		instruccionAtributo.add(inst);
 	}
@@ -40,10 +25,10 @@ public class instruccionMapeo {
 		return instruccionAtributo;
 	}
 	
-//	public ArrayList<String[][]> getInstruccionSetAtributos() {
-//		return instruccionSetAtributos;
-//	}
-
+	public  ArrayList<String[][]> getInstruccionesSet(){
+		return instruccionSetAtributos;
+	}
+	
 	public void eliminarElementosDeLista(){
 		for (int i = 0; i < instruccionAtributo.size(); i++) {
 			instruccionAtributo.remove(i);
@@ -52,7 +37,7 @@ public class instruccionMapeo {
 		
 	}
 
-	public ArrayList<String[][]>  GenerarInstruccionesSet(){
+	public void  GenerarInstruccionesSet(){
 		
 		for (int i = 0; i < instruccionAtributo.size(); i++) {
 			String [][] aux = instruccionAtributo.get(i);
@@ -78,8 +63,6 @@ public class instruccionMapeo {
 			}
 			
 		}
-		
-		return instruccionSetAtributos;
 		
 	}
 

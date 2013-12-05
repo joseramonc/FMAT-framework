@@ -20,13 +20,12 @@ public class BDmapeo {
 	/**
 	 * @param args
 	 */
-	private NodeList lista;
+	private NodeList listaXML;
 	private instruccionMapeo instrucciones;
 	//private MapeoCT map;
 		
 	public BDmapeo(){
 		instrucciones = new instruccionMapeo();
-	//	map = new MapeoCT();
 		CargarXML();
 		
 		
@@ -52,9 +51,9 @@ public class BDmapeo {
 		//ArrayList<Object> object = new ArrayList<>();
 		BuscarNodo(nombreTabla);
 		MapeoCT map = new MapeoCT();
-		ArrayList<Object> object = map.objetosDeTipo(instrucciones);
+		ArrayList<Object> objects = map.objetosDeTipo(instrucciones);		
 		instrucciones.eliminarElementosDeLista();
-		return object;
+		return objects;
 	}	
 		
 		private void CargarXML(){
@@ -65,11 +64,11 @@ public class BDmapeo {
 					DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 					Document doc = dBuilder.parse(fXmlFile);
 				 
-				//	System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+					//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 				 
 				
 					Element raiz = doc.getDocumentElement();
-					lista = raiz.getChildNodes();
+					listaXML = raiz.getChildNodes();
 					
 				
 				    } catch (Exception e) {
@@ -117,41 +116,8 @@ public class BDmapeo {
 				
 			}
 			
-			
-//		RecorrerInstrucciones();
-//			Class ob = map.getIntanceObject((instrucciones.getInstruccion().get(0))[0][0]);
-//			if(ob != null){
-//				System.out.println("JAJAJAJA");
-//			}
+			instrucciones.GenerarInstruccionesSet();
 		}
-		
-private void RecorrerInstrucciones(){
-	ArrayList<String[][]> Mapeo =	instrucciones.getInstruccionAtributo();
-	ArrayList<String[][]> setMapeo = instrucciones.GenerarInstruccionesSet();
-	
-	for (int i = 0; i < Mapeo.size(); i++) {
-			if(i == 0){
-			String [][] tem = Mapeo.get(i);
-			System.out.println("Nombre de clase: " + tem[0][0] + " Nombre de tabla: " + tem[0][1]);
-			}else{
-				String [][] tem = Mapeo.get(i);
-				System.out.println("Atributo de clase: " + tem[0][0] + " Atributo de tabla: " + tem[0][1]);
-			}
-	}
-	
-	System.out.println("------------------------------");
-	for (int i = 0; i < setMapeo.size(); i++) {
-		if(i == 0){
-		String [][] tem = setMapeo.get(i);
-		System.out.println("Nombre de clase: " + tem[0][0] + " Nombre de tabla: " + tem[0][1]);
-		}else{
-			String [][] tem = setMapeo.get(i);
-			System.out.println("Atributo de clase: " + tem[0][0] + " Atributo de tabla: " + tem[0][1]);
-		}
-}
-	
-	
-}		
 		
 		private String ascIIToHex(char aux){
 			StringBuilder hex = new StringBuilder();
@@ -163,8 +129,8 @@ private void RecorrerInstrucciones(){
 
 		private void BuscarNodo(String Nombre){
 			//System.out.println(lista.getLength());
-			for (int i = 0; i < lista.getLength(); i++) {
-				Node nodo = lista.item(i);
+			for (int i = 0; i < listaXML.getLength(); i++) {
+				Node nodo = listaXML.item(i);
 			
 				if(nodo.getNodeType() == Node.ELEMENT_NODE){
 					Element eElement = (Element) nodo;

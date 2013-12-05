@@ -65,19 +65,20 @@ public class MapeoCT {
 	public ArrayList<Object> objetosDeTipo(instruccionMapeo instruccion){
 		ArrayList<Object> objetos = new ArrayList<>();
 		
+		
 		ArrayList<String[][]> instruccionAtributos = instruccion.getInstruccionAtributo();
-		ArrayList<String[][]> nombresSetAtributos = instruccion.GenerarInstruccionesSet();
+		ArrayList<String[][]> nombresSetAtributos = instruccion.getInstruccionesSet();
 		
 		String className = (instruccionAtributos.get(0))[0][0];
 		String tableName = (instruccionAtributos.get(0))[0][1];
 		
 		Class<?> ObjectClass = getObjectClass(className);
-		ResultSet entidades =  consultarBD(tableName);
+		ResultSet entidadesDeBD =  consultarBD(tableName);
 		
 		Field[] atributosDeclase = atributosDeClase(ObjectClass);
-		
+		if(entidadesDeBD!=null){
 		try {
-			while (entidades.next()) {
+			while (entidadesDeBD.next()) {
 			//	Constructor [] a =ObjectClass.getConstructors();
 				Object entidadAux  = getInstance((ObjectClass.getConstructors())[0]);
 				
@@ -91,13 +92,13 @@ public class MapeoCT {
 										Method metodoSetAtributo = ObjectClass.getMethod(nombreSet, atributosDeclase[j].getType());
 										switch ( atributosDeclase[j].getType().toString()) {
 										case "class java.lang.String":
-											metodoSetAtributo.invoke(entidadAux, entidades.getString(tempInstrucc[0][1]));
+											metodoSetAtributo.invoke(entidadAux, entidadesDeBD.getString(tempInstrucc[0][1]));
 											break;
 										case "int":
-											metodoSetAtributo.invoke(entidadAux, entidades.getInt(tempInstrucc[0][1]));
+											metodoSetAtributo.invoke(entidadAux, entidadesDeBD.getInt(tempInstrucc[0][1]));
 											break;
 										case "boolean":
-											metodoSetAtributo.invoke(entidadAux, entidades.getBoolean(tempInstrucc[0][1]));
+											metodoSetAtributo.invoke(entidadAux, entidadesDeBD.getBoolean(tempInstrucc[0][1]));
 											break;
 
 										default:
@@ -132,17 +133,17 @@ public class MapeoCT {
 			e.printStackTrace();
 		}
 		
-		
+	}	
 		return objetos;
 	}
 	
-	public Field[] atributosDeClase(Class<?> ObjectClass){
+	private Field[] atributosDeClase(Class<?> ObjectClass){
 		Field[] atributos = ObjectClass.getDeclaredFields();
 		return atributos;
 		
 	}
 	
-	public ResultSet consultarBD(String nombreTabla){
+	private ResultSet consultarBD(String nombreTabla){
 		ResultSet element =	BD.BD(nombreTabla);
 		return element;
 	}
