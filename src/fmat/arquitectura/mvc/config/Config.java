@@ -23,7 +23,7 @@ public class Config {
     
     private static ArrayList<Relation> relations;
     private String path;
-    private static Config configuration = new Config("src/fmat/arquitectura/test/ejemplo.xml");
+    private static Config configuration = new Config("ejemplo.xml");
     
     private Config(String path){
         this.path = path;
