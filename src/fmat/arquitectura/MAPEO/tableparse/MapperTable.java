@@ -4,11 +4,19 @@ import java.util.ArrayList;
 
 public class MapperTable {
 
-	public ArrayList<Object> getAll(String nombreTabla){		
+	
+	
+	public ArrayList<Object> getAll(String nombreTabla)throws ExcepcionesMapeo{		
 		MapeoReaderXML generaInstrucciones = new MapeoReaderXML();
 		instruccionMapeo instrucciones = generaInstrucciones.getInstruccionesMapeo(nombreTabla);
-		MapeoParseT_O mapeoTO = new MapeoParseT_O();
-		ArrayList<Object> objects = mapeoTO.getObjetosDeTabla(instrucciones);
+		ArrayList<Object> objects;
+		if(instrucciones != null){
+			MapeoParseT_O mapeoTO = new MapeoParseT_O();
+			objects = mapeoTO.getObjetosDeTabla(instrucciones);
+		}else{
+			throw new ExcepcionesMapeo("No existe el nombre de la tabla " + nombreTabla +" en el XML");
+		}
+		
 		return objects;
 	}
 	
