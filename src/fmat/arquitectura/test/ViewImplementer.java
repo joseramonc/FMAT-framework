@@ -34,7 +34,7 @@ public class ViewImplementer extends ApplicationView{
     }
     
     public static void main(String[] args) throws NoSuchFieldException {
-//        ViewImplementer v = new ViewImplementer();
+    	//ViewImplementer v = new ViewImplementer();
     }
     
     public String getcampos1(){
