@@ -24,17 +24,17 @@ public class ConexionBDMapeo {
 	
 	public ResultSet BD(String nombreDetabla){
 		
-//		initPool iniciarPool=new initPool();
-//		iniciarPool.init();
-//		
-//		Controlador_Pool controller= Controlador_Pool.getInstance();
-//		Conexion conexion=controller.obtenerConexion();
-//		Connection conn=conexion.getConexion();
+		initPool iniciarPool=new initPool();
+		iniciarPool.init();
 		
-		DBConnectionFactory DBC = new DBConnectionFactory();
+		Controlador_Pool controller= Controlador_Pool.getInstance();
+		Conexion conexion=controller.obtenerConexion();
+		Connection conn=conexion.getConexion();
+		
+	//	DBConnectionFactory DBC = new DBConnectionFactory();
 		ResultSet rs = null;
 		try {
-			Connection conn = DBC.createConnection();
+			//Connection conn = DBC.createConnection();
 			java.sql.Statement st = conn.createStatement();
 			
 			 String Query = "SELECT * FROM " + nombreDetabla;
