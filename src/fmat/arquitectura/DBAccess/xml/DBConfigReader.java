@@ -18,12 +18,7 @@ public class DBConfigReader {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
-
-			// optional, but recommended
-			// read this -
-			// http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			doc.getDocumentElement().normalize();
-
 			url = doc.getElementsByTagName("url").item(0).getTextContent();
 			user = doc.getElementsByTagName("user").item(0).getTextContent();
 			pass = doc.getElementsByTagName("pass").item(0).getTextContent();
@@ -55,6 +50,11 @@ public class DBConfigReader {
 
 	public void setPass(String pass) {
 		this.pass = pass;
+	}
+	
+	public static void main(String args[]){
+		DBConfigReader db = new DBConfigReader();
+		System.out.println(db.getUrl()+"/"+db.getUser()+"/"+db.getPass());
 	}
 
 }
