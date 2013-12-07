@@ -1,8 +1,9 @@
 package fmat.arquitectura.pool.AdminPool.dominio;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import fmat.arquitectura.DBAccess.modelo.DBConnection;
 
 public class Pool  {
 	
@@ -32,7 +33,7 @@ public class Pool  {
 		return conexionDisponible;
 	}
 	
-	public Conexion crearConexion(Connection conn){
+	public Conexion crearConexion(DBConnection conn){
 		boolean estadoConexion=true;
 		Conexion conexion =new Conexion(conn,estadoConexion);
 		return conexion;

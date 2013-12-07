@@ -1,11 +1,10 @@
 package fmat.arquitectura.pool.AdminPool.GestorPool;
 
-import java.sql.Connection;
-
 
 import java.util.ArrayList;
 
 import fmat.arquitectura.DBAccess.connection.DBConnectionFactory;
+import fmat.arquitectura.DBAccess.modelo.DBConnection;
 import fmat.arquitectura.pool.AdminPool.dominio.Pool;
 import fmat.arquitectura.pool.AdminPool.dominio.Conexion;
 
@@ -108,7 +107,7 @@ public class Controlador_Pool  {
 	
 	private Conexion obtenerConexionDB(){ //metodo privado que se llamara por admin conexion
 		DBConnectionFactory factoryDB = new DBConnectionFactory();
-		Connection conn = factoryDB.createConnection();
+		DBConnection conn = factoryDB.createConnection();
 		Conexion conexion=poolConexiones.crearConexion(conn);
 		return conexion;
 	}
