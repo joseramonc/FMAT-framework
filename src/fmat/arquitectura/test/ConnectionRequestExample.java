@@ -1,11 +1,10 @@
 package fmat.arquitectura.test;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import fmat.arquitectura.DBAccess.connection.DBConnectionFactory;
+import fmat.arquitectura.DBAccess.modelo.DBConnection;
 
 public class ConnectionRequestExample {
 
@@ -13,14 +12,13 @@ public class ConnectionRequestExample {
 		// TODO Auto-generated method stub
 		DBConnectionFactory DBC = new DBConnectionFactory();
 		try {
-		Connection conn = DBC.createConnection();
+		DBConnection conn = DBC.createConnection();
 		
-		Statement st = conn.createStatement();
 		String query = "select * from perfil where perfil.Nombre = \"Maestro\"";
 		
-			ResultSet rs = st.executeQuery(query);
-			rs.next();
-			System.out.println(rs.getString(2));
+		ResultSet rs = conn.executeQuery(query);
+		rs.next();
+		System.out.println(rs.getString(2));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
