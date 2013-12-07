@@ -62,13 +62,16 @@ public class Controlador_Pool  {
 			// TODO Auto-generated method stub
 			int segundos=5;
 			try{
-				while(!poolConexiones.conexionesRestantes()){
+				while(true){
+				if(!poolConexiones.conexionesRestantes()){
 					System.out.println("Se creo nuevo segmento");
 					crearConexiones();
 					Thread.sleep(segundos*1000);
+				}else{
+					System.out.println("No es necesario crear nuevo segmento");
+					Thread.sleep(segundos*1000);
+					}
 				}
-				System.out.println("No es necesario crear nuevo segmento");
-				Thread.sleep(segundos*1000);
 			}catch(Exception e){
 				
 			}
