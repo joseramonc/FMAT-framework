@@ -22,8 +22,12 @@ public class Controlador_Pool  {
 	public void configurarPool(int segmentos,int tamanioSegmentos){
 		asignarNumeroSegmentos(segmentos);
 		asignarTamSegmentos(tamanioSegmentos);
-		crearConexiones();
-		segmentoConexionesNuevas.run();
+		if(crearConexiones()){
+			segmentoConexionesNuevas.run();
+		}else{
+			new ExcepcionPool("No se pudo crear el segmento de conexiones");
+		}
+		
 	}
 	
 	
@@ -40,7 +44,7 @@ public class Controlador_Pool  {
 				segmentoConexionesNuevas.start();
 				return true;
 				}else{
-					new Exception("No se ha podido reconfigurar el pool");
+					new ExcepcionPool("No se ha podido reconfigurar el pool");
 					return false;
 					}
 			}else{
@@ -82,7 +86,7 @@ public class Controlador_Pool  {
 		return INSTANCE;
     }
 	
-	private void crearConexiones(){
+	private boolean crearConexiones(){
 		if(poolConexiones.getSegmentosCreados()<poolConexiones.getSegmentos()){
 			ArrayList<Conexion>  conexiones= poolConexiones.crearSegmentoConexiones();
 			for(int indice=0; indice<poolConexiones.getTamanioSegmentos();indice++){
@@ -91,6 +95,9 @@ public class Controlador_Pool  {
 				System.out.println("Numero conexión creada: "+(indice+1));
 				}
 			poolConexiones.asignarSegmentoCreado(conexiones);
+			return true;
+		}else{
+			return false;
 		}
 
 	}
