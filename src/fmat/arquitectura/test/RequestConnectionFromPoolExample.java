@@ -1,10 +1,9 @@
 package fmat.arquitectura.test;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
+import fmat.arquitectura.DBAccess.modelo.DBConnection;
 import fmat.arquitectura.pool.AdminPool.GestorPool.Controlador_Pool;
 import fmat.arquitectura.pool.AdminPool.dominio.Conexion;
 import fmat.arquitectura.pool.init.initPool;
@@ -18,12 +17,11 @@ public class RequestConnectionFromPoolExample {
 		
 		Controlador_Pool controller= Controlador_Pool.getInstance();
 		Conexion conexion=controller.obtenerConexion();
-		Connection conn=conexion.getConexion();
+		DBConnection DBcon=conexion.getConexion();
 		try{
-		Statement st = conn.createStatement();
 		String query = "select * from usuario";
 		
-			ResultSet rs = st.executeQuery(query);
+			ResultSet rs = DBcon.executeQuery(query);
 			rs.next();
 			System.out.println(rs.getString(2));
 		} catch (SQLException e) {
