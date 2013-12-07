@@ -31,10 +31,10 @@ private ViewImplementer vi;
         vi.setUser(usr);
     }
     
-//    public View(ViewImplementer vi) {
-//        initComponents();
-////        this.vi = vi;
-//    }
+    public View(ViewImplementer vi) {
+        initComponents();
+        this.vi = vi;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,10 +53,8 @@ private ViewImplementer vi;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("XD");
-
-        jLabel2.setText("Ho"
-        		+ "la");
+        jLabel1.setText("Componente MVC");
+        jLabel2.setText("Framework... ");
 
         jButton1.setText("Agregar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -72,13 +70,12 @@ private ViewImplementer vi;
             }
         });
 
-        jButton3.setText("Agregar2");
+        jButton3.setText("Eliminar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,7 +92,7 @@ private ViewImplementer vi;
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1)))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,9 +107,10 @@ private ViewImplementer vi;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(0, Short.MAX_VALUE))
         );
-
+        jButton2.setVisible(false);
+        setResizable(false);
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

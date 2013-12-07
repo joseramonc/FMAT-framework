@@ -37,27 +37,11 @@ public class Config {
     private void readXML() {
         JXMLReader reader = new JXMLReader(path);
         relations = reader.getRelations();
-//        System.out.println("------------------------------------------------");
-//        for (int i = 0; i < relations.size(); i++) {
-//            System.out.println("------------------------------------------------");
-//            System.out.println("Relation " + String.valueOf(i+1));
-//            System.out.println("View: " + relations.get(i).getView());
-//            System.out.println("Controller: " + relations.get(i).getController());
-//            System.out.println("ViewAction: " + relations.get(i).getViewMethod());
-//            System.out.println("ControllerAction: " + relations.get(i).getControllerMethod());
-//            String[] params = relations.get(i).getParametersAsArray();
-//            for (int j = 0; j < params.length; j++)
-//                System.out.println("Parametro => " + params[j]);
-//            System.out.println("------------------------------------------------");
-//        }
-//        System.out.println("------------------------------------------------");
     }
     
     public  String[] getParametersOf(String view, String viewMethod){
         for (int i = 0; i < relations.size(); i++) {
             if(relations.get(i).getView().equals(view) && relations.get(i).getViewMethod().equals(viewMethod))
-//            	System.out.println(relations.get(i).getView());
-//            	System.out.println("jejeje");
                 return relations.get(i).getParametersAsArray();
         }
         return null;

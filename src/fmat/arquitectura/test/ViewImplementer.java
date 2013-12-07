@@ -33,10 +33,6 @@ public class ViewImplementer extends ApplicationView{
     	v = view;
     }
     
-    public static void main(String[] args) throws NoSuchFieldException {
-    	//ViewImplementer v = new ViewImplementer();
-    }
-    
     public String getcampos1(){
         return campos1;
     }
@@ -64,8 +60,8 @@ public class ViewImplementer extends ApplicationView{
         campos2 = v.getJLabel2().getText();
         numero = 40;
         alumnoExtremo = new Alumno();
-        alumnoExtremo.setNombre("potenciano");
-        alumnoExtremo.setMatricula("1010101010");
+        alumnoExtremo.setNombre("Paul Walker");
+        alumnoExtremo.setMatricula("33371628");
         sendToController("eliminar");
     }
     
