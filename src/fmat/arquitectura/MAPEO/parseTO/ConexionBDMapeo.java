@@ -1,4 +1,4 @@
-package fmat.arquitectura.MAPEO.tableparse;
+package fmat.arquitectura.MAPEO.parseTO;
 
 
 import java.sql.Connection;
@@ -24,17 +24,12 @@ public class ConexionBDMapeo {
 	
 	public ResultSet BD(String nombreDetabla){
 		
-		initPool iniciarPool=new initPool();
-		iniciarPool.init();
 		
-		Controlador_Pool controller= Controlador_Pool.getInstance();
-		Conexion conexion=controller.obtenerConexion();
-		Connection conn=conexion.getConexion();
-		
-	//	DBConnectionFactory DBC = new DBConnectionFactory();
+		Connection conn=getPoolConexion();
+
 		ResultSet rs = null;
 		try {
-			//Connection conn = DBC.createConnection();
+		
 			java.sql.Statement st = conn.createStatement();
 			
 			 String Query = "SELECT * FROM " + nombreDetabla;
@@ -49,6 +44,19 @@ public class ConexionBDMapeo {
 		}
 		
 		return rs;
+		
+	}
+	
+	private Connection getPoolConexion(){
+//		initPool iniciarPool=new initPool();
+//		iniciarPool.init();
+		
+//		Controlador_Pool controller= Controlador_Pool.getInstance();
+//		Conexion conexion=controller.obtenerConexion();
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		Connection conn = DBC.createConnection();
+//		Connection conn=conexion.getConexion();
+		return conn;
 		
 	}
 

@@ -3,8 +3,8 @@ package fmat.arquitectura.test;
 import java.util.ArrayList;
 
 
-import fmat.arquitectura.MAPEO.tableparse.ExcepcionesMapeo;
-import fmat.arquitectura.MAPEO.tableparse.MapperTable;
+import fmat.arquitectura.MAPEO.inicio.ExcepcionesMapeo;
+import fmat.arquitectura.MAPEO.inicio.MapperTable;
 
 public class EjemploTestMapeo {
 

@@ -1,4 +1,4 @@
-package fmat.arquitectura.MAPEO.tableparse;
+package fmat.arquitectura.MAPEO.inicio;
 
 public class ExcepcionesMapeo extends Exception{
 

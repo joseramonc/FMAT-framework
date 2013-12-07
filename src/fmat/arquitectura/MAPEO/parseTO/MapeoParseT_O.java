@@ -1,4 +1,4 @@
-package fmat.arquitectura.MAPEO.tableparse;
+package fmat.arquitectura.MAPEO.parseTO;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -7,12 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.lang.reflect.*;
 
+import fmat.arquitectura.MAPEO.interprete.instruccionMapeo;
+
 public class MapeoParseT_O {
 
 	/**
 	 * @param args
 	 */
-	ConexionBDMapeo BD;
+	private ConexionBDMapeo BD;
 	public MapeoParseT_O(){
 		BD = new ConexionBDMapeo();
 	}

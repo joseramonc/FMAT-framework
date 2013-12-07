@@ -1,4 +1,4 @@
-package fmat.arquitectura.MAPEO.tableparse;
+package fmat.arquitectura.MAPEO.interprete;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
