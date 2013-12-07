@@ -51,6 +51,8 @@ public class DBConnection {
 			e.printStackTrace();
 			executeRollback();
 			return false;
+		}finally{
+			setAutoCommitTrue();
 		}
 		
 	}
@@ -59,6 +61,15 @@ public class DBConnection {
 		try {
 			connection.setAutoCommit(false);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setAutoCommitTrue(){
+		try {
+			connection.setAutoCommit(true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
