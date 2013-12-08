@@ -1,12 +1,12 @@
 package fmat.arquitectura.Seguridad.DAO;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import fmat.arquitectura.DBAccess.connection.DBConnectionFactory;
+import fmat.arquitectura.DBAccess.modelo.DBConnection;
 import fmat.arquitectura.Seguridad.Modelo.Accion;
 import fmat.arquitectura.Seguridad.Modelo.Perfil;
 
@@ -14,23 +14,17 @@ public class DAOPerfil {
 	public void insertarPerfil(Perfil perfil){
 		try {
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "INSERT INTO "+TABLA_PERFILES+" (Nombre) VALUES ("+
 							"'"+perfil.getNombre()+"')";
 			
-			st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = conn.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 			
-			if(perfil.getListaAcciones()!=null){
-				ResultSet rs = st.getGeneratedKeys();
-				if(rs.next()){
-					int idPerfil = rs.getInt(1);
-					insertarAccionesPerfil(idPerfil, perfil.getListaAcciones());
-				}
+			if(perfil.getListaAcciones()!=null && rs!=null && rs.next()){
+				int idPerfil = rs.getInt(1);
+				insertarAccionesPerfil(idPerfil, perfil.getListaAcciones());
 			}
-			st.close();
-			conn.close();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -39,16 +33,12 @@ public class DAOPerfil {
 	public void eliminarPerfil(String nombrePerfil){
 		try {
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "DELETE FROM "+TABLA_PERFILES+" WHERE Nombre = '"+nombrePerfil+"'";
 			
-			st.executeUpdate(query);
-			
-			st.close();
-			conn.close();
-			
+			ResultSet rs = conn.executeQuery(query);
+			rs.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -56,18 +46,14 @@ public class DAOPerfil {
 	public void actualizarPerfil(Perfil perfil){
 		try {
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "UPDATE "+TABLA_PERFILES+" SET"
 						  +" Nombre = '"+perfil.getNombre()+"'"
 						  +" WHERE ID = "+perfil.getId();
 			
-			st.executeUpdate(query);
-			
-			st.close();
-			conn.close();
-			
+			ResultSet rs = conn.executeQuery(query);
+			rs.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -78,12 +64,11 @@ public class DAOPerfil {
 		
 		try {
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "SELECT * FROM "+TABLA_PERFILES+" WHERE ID = "+idPerfil;
-		
-			ResultSet rs = st.executeQuery(query);
+			
+			ResultSet rs = conn.executeQuery(query);
 			
 			if(rs.next()){
 				String nombre = rs.getString("Nombre");
@@ -93,9 +78,6 @@ public class DAOPerfil {
 				perfil = new Perfil(nombre,listaAcciones);
 				perfil.setId(idPerfil);
 			}
-			st.close();
-			conn.close();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -107,12 +89,11 @@ public class DAOPerfil {
 		
 		try {
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "SELECT * FROM "+TABLA_PERFILES+" WHERE Nombre = '"+nombrePerfil+"'";
 		
-			ResultSet rs = st.executeQuery(query);
+			ResultSet rs = conn.executeQuery(query);
 			
 			if(rs.next()){
 				int id = rs.getInt("ID");
@@ -122,8 +103,6 @@ public class DAOPerfil {
 				perfil = new Perfil(nombrePerfil,listaAcciones);
 				perfil.setId(id);
 			}
-			st.close();
-			conn.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,12 +114,11 @@ public class DAOPerfil {
 		ArrayList<Perfil> listaPerfiles = new ArrayList<Perfil>();
 		try {
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "SELECT * FROM "+TABLA_PERFILES;
 		
-			ResultSet rs = st.executeQuery(query);
+			ResultSet rs = conn.executeQuery(query);
 			
 			while(rs.next()){
 				int idPerfil = rs.getInt("ID");
@@ -153,8 +131,6 @@ public class DAOPerfil {
 				
 				listaPerfiles.add(perfil);
 			}
-			st.close();
-			conn.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,76 +140,47 @@ public class DAOPerfil {
 	}
 	
 	public void insertarAccionesPerfil(int idPerfil, ArrayList<Accion> listaAcciones){
-
-		try{
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
-
-			for(Accion accion: listaAcciones){
-				Statement st = conn.createStatement();
-				String query = "INSERT INTO "+TABLA_PERFILACCION+" (IDPerfil, IDAccion, Estado) VALUES ("
-								+idPerfil+","
-								+accion.getId()+","
-								+accion.getEstado()
-								+")";
-				st.executeUpdate(query);
-				st.close();
-			}
-			
-			conn.close();
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-		}
 		
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		DBConnection conn = DBC.createConnection();
+		
+		for(Accion accion: listaAcciones){
+			String query = "INSERT INTO "+TABLA_PERFILACCION+" (IDPerfil, IDAccion, Estado) VALUES ("
+							+idPerfil+","
+							+accion.getId()+","
+							+accion.getEstado()
+							+")";
+			conn.execute(query);
+		}
 	}
 	public void eliminarAccionDePerfil(int idPerfil, int idAccion){
-		try {
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
-			
-			Statement st = conn.createStatement();
-			String query = "DELETE FROM "+TABLA_PERFILACCION+" WHERE IDPerfil = "+idPerfil+" ADN IDAccion = "+idAccion;
-			
-			st.executeUpdate(query);
-			
-			st.close();
-			conn.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		DBConnection conn = DBC.createConnection();
+		
+		String query = "DELETE FROM "+TABLA_PERFILACCION+" WHERE IDPerfil = "+idPerfil+" ADN IDAccion = "+idAccion;
+		
+		conn.execute(query);
 	}
 	public void actualizarAccionDePerfil(Accion accion, int idPerfil){
-		try {
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
-			
-			Statement st = conn.createStatement();
-			String query = "UPDATE "+TABLA_PERFILACCION+" SET"
-						  +" Estado = "+accion.getEstado()
-						  +" WHERE IDPerfil = "+idPerfil+" ADN IDAccion = "+accion.getId();
-			
-			st.executeUpdate(query);
-			
-			st.close();
-			conn.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		DBConnection conn = DBC.createConnection();
+		
+		String query = "UPDATE "+TABLA_PERFILACCION+" SET"
+					  +" Estado = "+accion.getEstado()
+					  +" WHERE IDPerfil = "+idPerfil+" ADN IDAccion = "+accion.getId();
+		
+		conn.execute(query);
 	}
 	public ArrayList<Accion> consultarAccionesDePerfil(int idPerfil){
 		ArrayList<Accion> listaAcciones = new ArrayList<Accion>();
 		
 		try{
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "SELECT * FROM "+ TABLA_PERFILACCION +" WHERE IDPerfil = "+ idPerfil;
 		
-			ResultSet rs = st.executeQuery(query);
+			ResultSet rs = conn.executeQuery(query);
 			
 			while(rs.next()){
 				int idAccion = rs.getInt("IDAccion");
@@ -245,8 +192,6 @@ public class DAOPerfil {
 				
 				listaAcciones.add(accion);
 			}
-			st.close();
-			conn.close();
 		}
 		catch(SQLException e){
 			e.printStackTrace();
