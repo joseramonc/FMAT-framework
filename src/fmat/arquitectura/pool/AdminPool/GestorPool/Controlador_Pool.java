@@ -152,6 +152,7 @@ public class Controlador_Pool  {
 				poolConexiones.asignarSegmentoRespaldo(indice, nuevoSegmento);
 				segmentosCreados++;
 			}
+			poolConexiones.setSegmentosCreados(segmentosCreados);
 			if(conexionesFaltantes!=0){
 				ArrayList<Conexion> nuevoSegmento= new ArrayList<Conexion>();
 				for(int ind=0;ind<respaldo.size();ind++){
@@ -164,6 +165,7 @@ public class Controlador_Pool  {
 					nuevoSegmento.add(conexion);
 				}
 				poolConexiones.asignarSegmentoRespaldo(segmentosCreados, nuevoSegmento);
+				poolConexiones.setSegmentosCreados(segmentosCreados);
 			}
 			return true;
 		}else{
