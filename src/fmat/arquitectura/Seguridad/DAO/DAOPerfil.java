@@ -31,32 +31,22 @@ public class DAOPerfil {
 		}
 	}
 	public void eliminarPerfil(String nombrePerfil){
-		try {
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			DBConnection conn = DBC.createConnection();
-			
-			String query = "DELETE FROM "+TABLA_PERFILES+" WHERE Nombre = '"+nombrePerfil+"'";
-			
-			ResultSet rs = conn.executeQuery(query);
-			rs.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		DBConnection conn = DBC.createConnection();
+		
+		String query = "DELETE FROM "+TABLA_PERFILES+" WHERE Nombre = '"+nombrePerfil+"'";
+		
+		conn.execute(query);
 	}
 	public void actualizarPerfil(Perfil perfil){
-		try {
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			DBConnection conn = DBC.createConnection();
-			
-			String query = "UPDATE "+TABLA_PERFILES+" SET"
-						  +" Nombre = '"+perfil.getNombre()+"'"
-						  +" WHERE ID = "+perfil.getId();
-			
-			ResultSet rs = conn.executeQuery(query);
-			rs.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		DBConnection conn = DBC.createConnection();
+		
+		String query = "UPDATE "+TABLA_PERFILES+" SET"
+					  +" Nombre = '"+perfil.getNombre()+"'"
+					  +" WHERE ID = "+perfil.getId();
+		
+		conn.execute(query);
 	}
 	
 	public Perfil consultarPerfilPorID(int idPerfil){
