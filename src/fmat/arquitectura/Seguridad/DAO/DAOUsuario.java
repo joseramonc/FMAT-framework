@@ -1,12 +1,12 @@
 package fmat.arquitectura.Seguridad.DAO;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import fmat.arquitectura.DBAccess.connection.DBConnectionFactory;
+import fmat.arquitectura.DBAccess.modelo.DBConnection;
 import fmat.arquitectura.Seguridad.Modelo.Accion;
 import fmat.arquitectura.Seguridad.Modelo.Perfil;
 import fmat.arquitectura.Seguridad.Modelo.Usuario;
@@ -15,66 +15,42 @@ public class DAOUsuario {
 	public void insertarUsuario(Usuario usuario){
 		try {
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "INSERT INTO "+TABLA_USUARIOS+" (Alias, Contrasenia, Perfil) VALUES ("+
 							"'"+usuario.getNombre()+"',"+
 							"'"+usuario.getContrasenia()+"',"+
 							    usuario.getPerfil().getId()+")";
 			
-			st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = conn.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 			
-			if(usuario.getListaAcciones()!=null){
-				ResultSet rs = st.getGeneratedKeys();
-				if(rs.next()){
-					int idUsuario = rs.getInt(1);
-					insertarAccionesUsuario(idUsuario, usuario.getListaAcciones());
-				}
+			if(usuario.getListaAcciones()!=null && rs!=null && rs.next()){
+				int idUsuario = rs.getInt(1);
+				insertarAccionesUsuario(idUsuario, usuario.getListaAcciones());
 			}
-			
-			st.close();
-			conn.close();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	public void eliminarUsuario(String nombreUsuario){
-		try {
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
-			
-			Statement st = conn.createStatement();
-			String query = "DELETE FROM "+TABLA_USUARIOS+" WHERE Alias = '"+nombreUsuario+"'";
-			
-			st.executeUpdate(query);
-			
-			st.close();
-			conn.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		DBConnection conn = DBC.createConnection();
+		
+		String query = "DELETE FROM "+TABLA_USUARIOS+" WHERE Alias = '"+nombreUsuario+"'";
+		
+		conn.execute(query);
 	}
 	public void actualizarUsuario(Usuario usuario){
-		try {
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		DBConnection conn = DBC.createConnection();
+		
+		String query = "UPDATE "+TABLA_USUARIOS+" SET"
+					  +" Nombre = '"+usuario.getNombre()+"'"
+					  +" WHERE ID = "+usuario.getId();
 			
-			Statement st = conn.createStatement();
-			String query = "UPDATE "+TABLA_USUARIOS+" SET"
-						  +" Nombre = '"+usuario.getNombre()+"'"
-						  +" WHERE ID = "+usuario.getId();
+		conn.execute(query);
 			
-			st.executeUpdate(query);
-			
-			st.close();
-			conn.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public Usuario consultarUsuarioPorNombre(String nombreUsuario){
@@ -82,12 +58,11 @@ public class DAOUsuario {
 		
 		try {
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "SELECT * FROM "+TABLA_USUARIOS+" WHERE Alias = '"+nombreUsuario+"'";
 		
-			ResultSet rs = st.executeQuery(query);
+			ResultSet rs = conn.executeQuery(query);
 			
 			if(rs.next()){
 				int idUsuario = rs.getInt("ID");
@@ -102,8 +77,6 @@ public class DAOUsuario {
 				usuario = new Usuario(nombreUsuario, contrasena, perfil, listaAcciones);
 				usuario.setId(idUsuario);
 			}
-			st.close();
-			conn.close();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -116,12 +89,11 @@ public class DAOUsuario {
 		
 		try{
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "SELECT * FROM "+ TABLA_USUARIOACCION +" WHERE IDUsuario = "+ idUsuario;
-		
-			ResultSet rs = st.executeQuery(query);
+			
+			ResultSet rs = conn.executeQuery(query);
 			
 			while(rs.next()){
 				int idAccion = rs.getInt("IDAccion");
@@ -133,8 +105,6 @@ public class DAOUsuario {
 				
 				listaAcciones.add(accion);
 			}
-			st.close();
-			conn.close();
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -146,12 +116,11 @@ public class DAOUsuario {
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		try {
 			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+			DBConnection conn = DBC.createConnection();
 			
-			Statement st = conn.createStatement();
 			String query = "SELECT * FROM "+TABLA_USUARIOS;
 		
-			ResultSet rs = st.executeQuery(query);
+			ResultSet rs = conn.executeQuery(query);
 			
 			while(rs.next()){
 				int idUsuario = rs.getInt("ID");
@@ -169,8 +138,6 @@ public class DAOUsuario {
 				
 				listaUsuarios.add(usuario);
 			}
-			st.close();
-			conn.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -180,65 +147,37 @@ public class DAOUsuario {
 	}
 	
 	public void insertarAccionesUsuario(int idUsuario, ArrayList<Accion> listaAcciones){
+
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		DBConnection conn = DBC.createConnection();
 		
-		try{
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
+		for(Accion accion: listaAcciones){
+			String query = "INSERT INTO "+TABLA_USUARIOACCION+" (IDUsuario, IDAccion, Estado) VALUES ("
+							+idUsuario+","
+							+accion.getId()+","
+							+accion.getEstado()
+							+")";
 			
-			for(Accion accion: listaAcciones){
-				Statement st = conn.createStatement();
-				String query = "INSERT INTO "+TABLA_USUARIOACCION+" (IDUsuario, IDAccion, Estado) VALUES ("
-								+idUsuario+","
-								+accion.getId()+","
-								+accion.getEstado()
-								+")";
-				
-				st.executeUpdate(query);
-				st.close();
-			}
-			
-			conn.close();
+			conn.execute(query);
 		}
-		catch(SQLException e){
-			e.printStackTrace();
-		}
-		
 	}
 	public void eliminarAccionDeUsuario(int idUsuario, Accion accion){
-		try {
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
-			
-			Statement st = conn.createStatement();
-			String query = "DELETE FROM "+TABLA_USUARIOACCION+" WHERE IDUsuario = "+idUsuario+" ADN IDAccion = "+accion.getId();
-			
-			st.executeUpdate(query);
-			
-			st.close();
-			conn.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		DBConnection conn = DBC.createConnection();
+		
+		String query = "DELETE FROM "+TABLA_USUARIOACCION+" WHERE IDUsuario = "+idUsuario+" ADN IDAccion = "+accion.getId();
+		
+		conn.execute(query);
 	}
 	public void actualizarAccionDeUsuario(int idUsuario, Accion accion){
-		try {
-			DBConnectionFactory DBC = new DBConnectionFactory();
-			Connection conn = DBC.createConnection();
-			
-			Statement st = conn.createStatement();
-			String query = "UPDATE "+TABLA_USUARIOACCION+" SET"
-						  +" Estado = "+accion.getEstado()
-						  +" WHERE IDUsuario = "+idUsuario+" ADN IDAccion = "+accion.getId();
-			
-			st.executeUpdate(query);
-			
-			st.close();
-			conn.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		DBConnectionFactory DBC = new DBConnectionFactory();
+		DBConnection conn = DBC.createConnection();
+		
+		String query = "UPDATE "+TABLA_USUARIOACCION+" SET"
+					  +" Estado = "+accion.getEstado()
+					  +" WHERE IDUsuario = "+idUsuario+" ADN IDAccion = "+accion.getId();
+		
+		conn.execute(query);
 	}
 	
 	final String TABLA_USUARIOS = "usuario";
