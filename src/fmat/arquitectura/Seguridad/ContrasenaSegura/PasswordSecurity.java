@@ -230,9 +230,9 @@ public class PasswordSecurity {
         }
 
         if (nScore >= 0 && nScore < 20) {
-            sComplexity = "Muy d�bil";
+            sComplexity = "Muy debil";
         } else if (nScore >= 20 && nScore < 40) {
-            sComplexity = "D�bil";
+            sComplexity = "Debil";
         } else if (nScore >= 40 && nScore < 60) {
             sComplexity = "Buena";
         } else if (nScore >= 60 && nScore < 80) {
