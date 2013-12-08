@@ -43,7 +43,7 @@ public class NivelPass extends javax.swing.JFrame {
 
         txtScore.setEditable(false);
 
-        jLabel1.setText("Contraseña");
+        jLabel1.setText("Contrasenia");
 
         jLabel2.setText("Nivel (Base 100)");
 
