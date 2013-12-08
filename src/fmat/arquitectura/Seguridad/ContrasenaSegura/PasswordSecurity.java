@@ -3,7 +3,39 @@ package fmat.arquitectura.Seguridad.ContrasenaSegura;
 public class PasswordSecurity {
 
     public int passwordScore(String pwd) {
+        
+        int nScore = 0;
 
+        int nLength;
+        int nAlphaUC = 0;
+        int nAlphaLC = 0;
+        int nNumber = 0;
+        int nSymbol = 0;
+        int nMidChar = 0;
+        int nRequirements;
+        int nRepChar = 0;
+        int nConsecAlphaUC = 0;
+        int nConsecAlphaLC = 0;
+        int nConsecNumber = 0;
+        int nConsecSymbol = 0;
+        int nConsecCharType = 0;
+        int nSeqAlpha = 0;
+        int nSeqNumber = 0;
+        int nSeqChar = 0;
+        int nReqChar = 0;
+        int nMultLength = 4;
+        int nMultNumber = 4;
+        int nMultSymbol = 6;
+        int nMultMidChar = 2;
+        int nMultConsecAlphaUC = 2;
+        int nMultConsecAlphaLC = 2;
+        int nMultConsecNumber = 2;
+        int nMultSeqAlpha = 3;
+        int nMultSeqNumber = 3;
+        int nTmpAlphaUC = 0;
+        int nTmpAlphaLC = 0;
+        int nTmpNumber = 0;
+        int nTmpSymbol = 0;
         String sAlphas = "abcdefghijklmnopqrstuvwxyz";
         String sNumerics = "01234567890";
 
@@ -198,9 +230,9 @@ public class PasswordSecurity {
         }
 
         if (nScore >= 0 && nScore < 20) {
-            sComplexity = "Muy débil";
+            sComplexity = "Muy dï¿½bil";
         } else if (nScore >= 20 && nScore < 40) {
-            sComplexity = "Débil";
+            sComplexity = "Dï¿½bil";
         } else if (nScore >= 40 && nScore < 60) {
             sComplexity = "Buena";
         } else if (nScore >= 60 && nScore < 80) {
@@ -211,37 +243,4 @@ public class PasswordSecurity {
 
         return sComplexity;
     }
-    
-    int nScore = 0;
-
-    int nLength;
-    int nAlphaUC = 0;
-    int nAlphaLC = 0;
-    int nNumber = 0;
-    int nSymbol = 0;
-    int nMidChar = 0;
-    int nRequirements;
-    int nRepChar = 0;
-    int nConsecAlphaUC = 0;
-    int nConsecAlphaLC = 0;
-    int nConsecNumber = 0;
-    int nConsecSymbol = 0;
-    int nConsecCharType = 0;
-    int nSeqAlpha = 0;
-    int nSeqNumber = 0;
-    int nSeqChar = 0;
-    int nReqChar = 0;
-    int nMultLength = 4;
-    int nMultNumber = 4;
-    int nMultSymbol = 6;
-    int nMultMidChar = 2;
-    int nMultConsecAlphaUC = 2;
-    int nMultConsecAlphaLC = 2;
-    int nMultConsecNumber = 2;
-    int nMultSeqAlpha = 3;
-    int nMultSeqNumber = 3;
-    int nTmpAlphaUC = 0;
-    int nTmpAlphaLC = 0;
-    int nTmpNumber = 0;
-    int nTmpSymbol = 0;
 }

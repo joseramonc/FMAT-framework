@@ -1,14 +1,15 @@
 package fmat.arquitectura.pool.AdminPool.dominio;
 
-import java.sql.Connection;
+
+import fmat.arquitectura.DBAccess.modelo.DBConnection;
 public class Conexion {
  
-	public Conexion(Connection conexion,boolean estado){
+	public Conexion(DBConnection conexion,boolean estado){
 		this.conexion=conexion;
 		this.estado=estado;
 	}
 	
-	public Connection getConexion() {
+	public DBConnection getConexion() {
 		return conexion;
 	}
 
@@ -20,7 +21,7 @@ public class Conexion {
 		this.estado=estado;
 	}
 	
-	private Connection conexion;
+	private DBConnection conexion;
 	private boolean estado;
 }
  
