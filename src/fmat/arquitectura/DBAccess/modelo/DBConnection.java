@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DBConnection {
@@ -27,6 +28,16 @@ public class DBConnection {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public int executeUpdate(String query){
+		try {
+			return this.connection.createStatement().executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 	
 	public ResultSet executeQuery(String query){
