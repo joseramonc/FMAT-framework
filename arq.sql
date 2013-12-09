@@ -71,16 +71,16 @@ DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `ID` int(6) NOT NULL AUTO_INCREMENT,
   `Alias` varchar(30) NOT NULL,
-  `Contraseña` varchar(40) NOT NULL,
+  `Contrasenia` varchar(40) NOT NULL,
   `Perfil` int(6) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `IDPerfil` (`Perfil`),
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`Perfil`) REFERENCES `perfil` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `usuario` */
 
-insert  into `usuario` values (1,'Yussel','7UEyNsXiW4EmJRkVtDcr+g==',1),(2,'Aldo','1nnSxYn/cYySLGnb7yd9gA==',2);
+insert  into `usuario` values (1,'Yussel','7UEyNsXiW4EmJRkVtDcr+g==',1),(2,'Aldo','1nnSxYn/cYySLGnb7yd9gA==',2),(4,'Pedro','TQ/GtWpewsdYESRFI2+09Q==',1),(5,'Ana','W50uymShkZdf+39yN8Pw9g==',1),(6,'Federico','TQ/GtWpewsdYESRFI2+09Q==',1),(7,'Lucia','TQ/GtWpewsdYESRFI2+09Q==',1),(8,'Marco','pE1CLclEfvJjyaOXBP/Uow==',1);
 
 /*Table structure for table `usuarioaccion` */
 
@@ -98,7 +98,7 @@ CREATE TABLE `usuarioaccion` (
 
 /*Data for the table `usuarioaccion` */
 
-insert  into `usuarioaccion` values (1,2,1),(2,1,1),(2,2,0);
+insert  into `usuarioaccion` values (1,2,1),(2,1,1),(2,2,0),(4,2,1),(5,2,1),(6,2,1),(7,2,1),(8,2,1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
