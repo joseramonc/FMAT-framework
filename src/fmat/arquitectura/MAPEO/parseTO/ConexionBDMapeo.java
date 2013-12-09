@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import fmat.arquitectura.DBAccess.connection.DBConnectionFactory;
+import fmat.arquitectura.DBAccess.modelo.DBConnection;
 import fmat.arquitectura.pool.AdminPool.GestorPool.Controlador_Pool;
 import fmat.arquitectura.pool.AdminPool.dominio.Conexion;
 import fmat.arquitectura.pool.init.initPool;
@@ -25,37 +26,26 @@ public class ConexionBDMapeo {
 	public ResultSet BD(String nombreDetabla){
 		
 		
-		Connection conn=getPoolConexion();
+		DBConnection st =getPoolConexion();
 
 		ResultSet rs = null;
-		try {
+		String Query = "SELECT * FROM " + nombreDetabla;
 		
-			java.sql.Statement st = conn.createStatement();
-			
-			 String Query = "SELECT * FROM " + nombreDetabla;
-			
-			  rs = st.executeQuery( Query );
-
-			 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Error al consultar la BD en el Modulo de MAPEO: " + e.toString());
-			e.printStackTrace();
-		}
+		  rs = st.executeQuery( Query );
 		
 		return rs;
 		
 	}
 	
-	private Connection getPoolConexion(){
-//		initPool iniciarPool=new initPool();
-//		iniciarPool.init();
+	private DBConnection getPoolConexion(){
+		initPool iniciarPool=new initPool();
+		iniciarPool.init();
 		
-//		Controlador_Pool controller= Controlador_Pool.getInstance();
-//		Conexion conexion=controller.obtenerConexion();
-		DBConnectionFactory DBC = new DBConnectionFactory();
-		Connection conn = DBC.createConnection();
-//		Connection conn=conexion.getConexion();
+		Controlador_Pool controller= Controlador_Pool.getInstance();
+		Conexion conexion=controller.obtenerConexion();
+		//DBConnectionFactory DBC = new DBConnectionFactory();
+		//Connection conn = DBC.createConnection();
+		DBConnection conn=conexion.getConexion();
 		return conn;
 		
 	}
