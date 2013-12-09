@@ -1,0 +1,39 @@
+ import java.io.IOException;
+  import java.util.Date;
+  import org.apache.log4j.*;
+ 
+  public class Framework {
+
+      Logger logger;
+      public Framework(String nombre) throws IOException {
+          logger = Logger.getLogger(Framework.class);
+          // Se asigna los datos que llevara cada linea en el archivo de texto plano
+          PatternLayout layout = new PatternLayout("%p: Fecha:  %d{dd/MMM/yyyy}, Clase: %F Funcion: %M, Texto: %m %n");
+          //se crea un objeto d tipo  RollingFileAppender  para crear una copia de seguridad de los registros
+          RollingFileAppender salida = new RollingFileAppender();
+          //Abre el archivo de la ruta especificada para que almacene los registros
+          salida.setFile("Logger/bitacora" + ".log", true, false, 0);
+          //a la copia de seguridad se le pasa por parametros los formatos de cada linea
+          salida.setLayout(layout);
+          //limpia los datos basura que existan en el logger
+          logger.removeAllAppenders();
+          //Agrega la salida almacenada en la copia de seguridad  al logger
+          logger.addAppender(salida);
+          
+          logger.setAdditivity(false);
+      }
+      public Logger getLog() {
+          return logger;
+      }
+      public void setLog(Logger log) {
+          this.logger = log;
+      }
+      public static void main(String[] args) throws IOException {
+            Framework log = new Framework("logger.framework");
+            Logger logger = log.getLog();
+            logger.info("Texto de info");
+            logger.error("Texto de Error");
+            logger.warn("Texto de warn ");
+      }
+ 
+  }
